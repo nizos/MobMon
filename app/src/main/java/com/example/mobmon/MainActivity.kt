@@ -9,7 +9,11 @@ import android.widget.TextView
 import com.android.volley.toolbox.Volley
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.Request
+import com.android.volley.Response
 import org.json.JSONObject
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserFactory
+import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,11 +39,8 @@ class MainActivity : AppCompatActivity() {
 
         // Request a string response from the provided URL.
         val stringRequest = object: StringRequest(Request.Method.GET, url,
-                { response ->
-                    // Display the first 500 characters of the response string.
-                    dataTextView.text = "Response is: ${response.substring(0, 1500)}"
-                },
-                { error -> dataTextView.text = "That didn't work! - ${error.networkResponse.statusCode} - ${error.networkResponse.allHeaders}" })
+                { response -> parseData(response)},
+                { error -> dataTextView.text = "That didn't work! - ${error.networkResponse.statusCode} -\n ${error.networkResponse.allHeaders} \n" })
         {
             override fun getHeaders() : MutableMap<String,String> {
                 val headers = HashMap<String, String>()
@@ -52,5 +53,26 @@ class MainActivity : AppCompatActivity() {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
+    }
+
+    fun parseData(resp : String) {
+        val dataTextView = findViewById<TextView>(R.id.dataTextView)
+
+        val parser = XmlPullParserFactory.newInstance().newPullParser()
+        val stream: InputStream = resp.byteInputStream()
+        parser.setInput(stream, "UTF-8") // TODO: Make this encoding more customizable, not everyone uses UTF-8
+        var event = parser.eventType
+
+
+        while(event != XmlPullParser.END_DOCUMENT) {
+            when (event) {
+                XmlPullParser.START_DOCUMENT -> dataTextView.append("\nSTART!")
+                XmlPullParser.END_DOCUMENT -> dataTextView.append("\nEND!")
+                XmlPullParser.START_TAG -> dataTextView.append("\nTAG: ${parser.name} ")
+                XmlPullParser.END_TAG -> dataTextView.append("END TAG!")
+            }
+
+            event = parser.next()
+        }
     }
 }
