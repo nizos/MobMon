@@ -2,6 +2,7 @@ package com.example.mobmon
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Base64
 import android.util.Log
 import android.widget.Button
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     fun getData() {
         // Instantiate the RequestQueue.
         val dataTextView = findViewById<TextView>(R.id.dataTextView)
+        dataTextView.movementMethod = ScrollingMovementMethod()
         val queue = Volley.newRequestQueue(this)
         val url = "http://192.168.0.199:82/mahm"  // TODO: RETRIEVE APPLICATION IP FROM SETTINGS
 
