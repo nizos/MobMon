@@ -10,10 +10,12 @@ import com.android.volley.toolbox.Volley
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.Request
 import com.android.volley.Response
+import com.example.mobmon.data.MSIParser
 import org.json.JSONObject
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.InputStream
+import java.util.function.BiConsumer
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         // Request a string response from the provided URL.
         val stringRequest = object: StringRequest(Request.Method.GET, url,
-                { response -> parseData(response)},
+                { response -> dataTextView.text = stringifyReturn(MSIParser.parseMSIData(response, "UTF-8"))}, // TODO: Make encoding more dynamic.
                 { error -> dataTextView.text = "That didn't work! - ${error.networkResponse.statusCode} -\n ${error.networkResponse.allHeaders} \n" })
         {
             override fun getHeaders() : MutableMap<String,String> {
@@ -55,24 +57,14 @@ class MainActivity : AppCompatActivity() {
         queue.add(stringRequest)
     }
 
-    fun parseData(resp : String) {
-        val dataTextView = findViewById<TextView>(R.id.dataTextView)
-
-        val parser = XmlPullParserFactory.newInstance().newPullParser()
-        val stream: InputStream = resp.byteInputStream()
-        parser.setInput(stream, "UTF-8") // TODO: Make this encoding more customizable, not everyone uses UTF-8
-        var event = parser.eventType
-
-
-        while(event != XmlPullParser.END_DOCUMENT) {
-            when (event) {
-                XmlPullParser.START_DOCUMENT -> dataTextView.append("\nSTART!")
-                XmlPullParser.END_DOCUMENT -> dataTextView.append("\nEND!")
-                XmlPullParser.START_TAG -> dataTextView.append("\nTAG: ${parser.name} ")
-                XmlPullParser.END_TAG -> dataTextView.append("END TAG!")
+    fun stringifyReturn(input: MutableMap<String, MutableMap<String,String>>): String {
+        var returnString = ""
+        input.forEach {
+            returnString += it.key + "\n"
+            it.value.forEach {
+                returnString += "-> " + it.key + " = " + it.value + "\n"
             }
-
-            event = parser.next()
         }
+        return returnString
     }
 }
