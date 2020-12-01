@@ -37,34 +37,34 @@ class MainActivity : AppCompatActivity() {
 
         dataTextView = findViewById(R.id.dataTextView)
         queue = Volley.newRequestQueue(this)
-        ipAddress = ipAddressTextField.text.toString()
-        username = usernameTextField.text.toString()
-        password = passwordTextField.text.toString()
-        interval = updateIntervalTextField.text.toString().toLong()
         mainHandler = Handler(Looper.getMainLooper())
         dataTextView.movementMethod = ScrollingMovementMethod()
 
 
         val connectButton = findViewById<Button>(R.id.ConnectButton)
         connectButton?.setOnClickListener {
+            ipAddress = ipAddressTextField.text.toString()
+            username = usernameTextField.text.toString()
+            password = passwordTextField.text.toString()
+            interval = updateIntervalTextField.text.toString().toLong()
             mainHandler.post(object : Runnable {
                 override fun run() {
-                    connect()
+                    connect(ipAddress, username, password)
                     mainHandler.postDelayed(this, 1000)
                 }
             })
         }
     }
 
-    private fun connect() {
+    private fun connect(ip: String, user: String, pass: String) {
 
-        val stringRequest = object: StringRequest(Request.Method.GET, "http://192.168.87.128:82/mahm",
+        val stringRequest = object: StringRequest(Request.Method.GET, ip,
                 { response -> dataTextView.text = stringifyReturn(MSIParser.parseMSIData(response, "UTF-8"))}, // TODO: Make encoding more dynamic.
                 { error -> dataTextView.text = "That didn't work! - ${error.toString()} -\n" })
         {
             override fun getHeaders() : MutableMap<String,String> {
                 val headers = HashMap<String, String>()
-                val credentials = String.format("%s:%s", "MSIAfterburner", "17cc95b4017d496f82") // TODO: FORCE THIS TO USE APPLICATION SETTINGS FOR RETRIEVING USER/PASS
+                val credentials = String.format("%s:%s", user, pass) // TODO: FORCE THIS TO USE APPLICATION SETTINGS FOR RETRIEVING USER/PASS
                 val auth = Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
                 headers["Authorization"] = "Basic $auth"
                 return headers
