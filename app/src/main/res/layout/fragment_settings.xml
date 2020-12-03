@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.settings.SettingsFragment">
+
+    <Button
+        android:id="@+id/connectButton"
+        android:layout_width="260dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="25dp"
+        android:text="Connect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UpdateIntervalTextField" />
+
+    <EditText
+        android:id="@+id/ipAddressTextField"
+        android:layout_width="260dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="http://192.168.87.128:82/mahm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IpAddressTextFieldLabel" />
+
+    <EditText
+        android:id="@+id/usernameTextField"
+        android:layout_width="260dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="MSIAfterburner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UsernameTextFieldLabel" />
+
+    <EditText
+        android:id="@+id/passwordTextField"
+        android:layout_width="260dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text="17cc95b4017d496f82"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordTextFieldLabel" />
+
+    <TextView
+        android:id="@+id/ipAddressTextFieldLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Ip Address"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="75dp" />
+
+    <TextView
+        android:id="@+id/usernameTextFieldLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Username"
+        app:layout_constraintTop_toBottomOf="@+id/IpAddressTextField"
+        tools:layout_editor_absoluteX="75dp" />
+
+    <TextView
+        android:id="@+id/passwordTextFieldLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Password"
+        app:layout_constraintTop_toBottomOf="@+id/UsernameTextField"
+        tools:layout_editor_absoluteX="75dp" />
+
+    <TextView
+        android:id="@+id/updateIntervalTextFieldLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Update Interval (ms)"
+        app:layout_constraintTop_toBottomOf="@+id/PasswordTextField"
+        tools:layout_editor_absoluteX="75dp" />
+
+    <EditText
+        android:id="@+id/updateIntervalTextField"
+        android:layout_width="260dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="1000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UpdateIntervalTextFieldLabel" />
+
+    <TextView
+        android:id="@+id/dataTextView2"
+        android:layout_width="253dp"
+        android:layout_height="221dp"
+        android:layout_marginTop="19dp"
+        android:text="Press connect to get started!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ConnectButton" />
+
+    <TextView
+        android:id="@+id/text_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textColor="#99FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

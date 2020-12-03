@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_dashboard">
+
+    <fragment
+        android:id="@+id/nav_dashboard"
+        android:name="com.example.mobmon.ui.dashboard.DashboardFragment"
+        android:label="@string/menu_title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/nav_widgets"
+        android:name="com.example.mobmon.ui.widgets.WidgetsFragment"
+        android:label="@string/menu_title_widgets"
+        tools:layout="@layout/fragment_widgets" />
+
+    <fragment
+        android:id="@+id/nav_profiles"
+        android:name="com.example.mobmon.ui.profiles.ProfilesFragment"
+        android:label="@string/menu_title_profile"
+        tools:layout="@layout/fragment_profiles" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.mobmon.ui.settings.SettingsFragment"
+        android:label="@string/menu_title_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_support"
+        android:name="com.example.mobmon.ui.support.SupportFragment"
+        android:label="@string/menu_title_support"
+        tools:layout="@layout/fragment_support" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.example.mobmon.ui.about.AboutFragment"
+        android:label="@string/menu_title_about"
+        tools:layout="@layout/fragment_about" />
+
+</navigation>

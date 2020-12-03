@@ -1,114 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/dark_100"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <Button
-        android:id="@+id/ConnectButton"
-        android:layout_width="260dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="25dp"
-        android:text="Connect"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UpdateIntervalTextField" />
+    <include
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <EditText
-        android:id="@+id/IpAddressTextField"
-        android:layout_width="260dp"
-        android:layout_height="39dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="http://192.168.87.128:82/mahm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/IpAddressTextFieldLabel" />
-
-    <EditText
-        android:id="@+id/UsernameTextField"
-        android:layout_width="260dp"
-        android:layout_height="39dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="MSIAfterburner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UsernameTextFieldLabel" />
-
-    <EditText
-        android:id="@+id/PasswordTextField"
-        android:layout_width="260dp"
-        android:layout_height="39dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:text="17cc95b4017d496f82"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PasswordTextFieldLabel" />
-
-    <TextView
-        android:id="@+id/IpAddressTextFieldLabel"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Ip Address"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="75dp" />
-
-    <TextView
-        android:id="@+id/UsernameTextFieldLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Username"
-        app:layout_constraintTop_toBottomOf="@+id/IpAddressTextField"
-        tools:layout_editor_absoluteX="75dp" />
-
-    <TextView
-        android:id="@+id/PasswordTextFieldLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Password"
-        app:layout_constraintTop_toBottomOf="@+id/UsernameTextField"
-        tools:layout_editor_absoluteX="75dp" />
-
-    <TextView
-        android:id="@+id/UpdateIntervalTextFieldLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Update Interval (ms)"
-        app:layout_constraintTop_toBottomOf="@+id/PasswordTextField"
-        tools:layout_editor_absoluteX="75dp" />
-
-    <EditText
-        android:id="@+id/UpdateIntervalTextField"
-        android:layout_width="260dp"
-        android:layout_height="39dp"
-        android:ems="10"
-        android:inputType="number"
-        android:text="1000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UpdateIntervalTextFieldLabel" />
-
-    <TextView
-        android:id="@+id/dataTextView"
-        android:layout_width="253dp"
-        android:layout_height="221dp"
-        android:layout_marginTop="19dp"
-        android:text="Press connect to get started!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConnectButton" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/dark_200"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:itemIconTint="#60FFFFFF"
+        app:itemTextColor="#60FFFFFF"
+        app:menu="@menu/activity_main_drawer" />
+</androidx.drawerlayout.widget.DrawerLayout>
