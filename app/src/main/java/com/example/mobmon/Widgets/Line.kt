@@ -5,7 +5,7 @@ class Line (val sentName:String) : Widget(){
     override val name = sentName
     override var widgetColor = "#FFFFFFFF" //White
     override var dataValues : MutableMap<String, MutableMap<String, String>>? = null
-    override fun updateWidget(sentValues: MutableMap<String, MutableMap<String, String>>?){
+    override fun updateData(sentValues: MutableMap<String, MutableMap<String, String>>?){
         Log.e("yo","${sentValues}")
     }
 }

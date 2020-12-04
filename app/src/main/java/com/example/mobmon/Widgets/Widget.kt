@@ -9,6 +9,6 @@ abstract class Widget {
     open fun printDataValues(){
         Log.e("yo","datavalues: ${dataValues}")
     }
-    abstract fun updateWidget(sentValues: MutableMap<String, MutableMap<String, String>>?)
+    abstract fun updateData(sentValues: MutableMap<String, MutableMap<String, String>>?)
 }
 
