@@ -35,25 +35,25 @@ class DashboardFragment : Fragment() {
             textView.text = it
         })
 
-        var test: MutableMap<String, MutableMap<String, String>> = mutableMapOf<String, MutableMap<String, String>>()
-        test.put("First Key", mutableMapOf(Pair("Second key", "Value")))
-
-
+        var lineData: MutableMap<String, MutableMap<String, String>> = mutableMapOf<String, MutableMap<String, String>>()
+        lineData.put("First Key", mutableMapOf(Pair("Second key", "Value")))
         var widgetList = mutableListOf<Widget>()
         widgetList.add(Line("Line"))
         widgetList.forEach {
-            it.updateData(test)
+            it.updateData(lineData)
             it.printDataValues()
         }
 
         //pass context
         var widgetDataHandler = WidgetData(getActivity())
-        widgetDataHandler.initVariables()
 
+        // TODO: Add this to WidgetData class
         mainHandler.post(object : Runnable {
             override fun run() {
                 widgetDataHandler.update()
                 mainHandler.postDelayed(this, interval)
+                val dashBoardText = root.findViewById<TextView>(R.id.text_dashboard)
+                dashBoardText.text = widgetDataHandler.dataResponse
             }
         })
 

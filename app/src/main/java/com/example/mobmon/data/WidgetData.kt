@@ -16,13 +16,13 @@ public class WidgetData(activity: FragmentActivity?) {
     private var username: String = "MSIAfterburner"
     private var password: String = "17cc95b4017d496f82"
     lateinit var dataTextView: TextView
-    var testResponse: String? = null
+    var dataResponse: String? = null
     //lateinit var mainHandler: Handler
     lateinit var queue: RequestQueue
     private var context = activity
 
     //Initiliaze requestqueue with sent context
-    fun initVariables() {
+    init {
         queue = Volley.newRequestQueue(context)
     }
 
@@ -30,12 +30,16 @@ public class WidgetData(activity: FragmentActivity?) {
         connect(ipAddress,username,password)
     }
 
+    fun onMSIResponse(response : String) {
+        testResponse = stringifyReturn(MSIParser.parseMSIData(response, "UTF-8"));
+        //TODO: Add event listener for reading new information?
+    }
+
     fun connect(ip: String, user: String, pass: String) {
         val dashBoardText = context?.findViewById<TextView>(R.id.text_dashboard)
         val stringRequest = object: StringRequest(
-                Request.Method.GET, ip, { response -> dashBoardText?.text = stringifyReturn(MSIParser.parseMSIData(response, "UTF-8")) },
+                Request.Method.GET, ip, { response -> this.onMSIResponse(response) },
                 { error -> dashBoardText?.text = "That didn't work! - ${error.toString()} -\n" })
-
         {
             override fun getHeaders() : MutableMap<String,String> {
                 val headers = HashMap<String, String>()
