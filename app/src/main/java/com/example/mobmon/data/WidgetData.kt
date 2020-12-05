@@ -41,6 +41,7 @@ public class WidgetData(activity: FragmentActivity?) {
         return dataResponse
     }
 
+
     fun connect(ip: String, user: String, pass: String) {
         val dashBoardText = context?.findViewById<TextView>(R.id.text_dashboard)
         val stringRequest = object: StringRequest(

@@ -16,6 +16,7 @@
         android:textAlignment="center"
         android:textColor="#99FFFFFF"
         android:textSize="20sp"
+        android:scrollbars = "vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

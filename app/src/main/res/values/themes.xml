@@ -11,6 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:popupMenuStyle">@style/PopupMenuStyle</item>
         <!-- Customize your theme here. -->
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
@@ -21,6 +22,9 @@
     </style>
 
     <style name="Theme.Mobmon.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.Mobmon.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="PopupMenuStyle" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:popupBackground">#FF4081</item>
+    </style>
 </resources>
