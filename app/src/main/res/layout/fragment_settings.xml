@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UpdateIntervalTextField" />
+        app:layout_constraintTop_toBottomOf="@+id/updateIntervalTextField" />
 
     <EditText
         android:id="@+id/ipAddressTextField"
