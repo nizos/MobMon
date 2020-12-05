@@ -39,11 +39,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_dashboard, R.id.nav_widgets, R.id.nav_profiles, R.id.nav_settings, R.id.nav_support, R.id.nav_about), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

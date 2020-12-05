@@ -16,7 +16,7 @@ public class WidgetData(activity: FragmentActivity?) {
     private var username: String = "MSIAfterburner"
     private var password: String = "17cc95b4017d496f82"
     lateinit var dataTextView: TextView
-    var stringifiedResponse: String = ""
+    var testResponse: String? = null
     //lateinit var mainHandler: Handler
     lateinit var queue: RequestQueue
     private var context = activity
@@ -29,15 +29,12 @@ public class WidgetData(activity: FragmentActivity?) {
     fun update() {
         connect(ipAddress,username,password)
     }
-    //Log.e("Test","${stringifyReturn(MSIParser.parseMSIData(response, "UTF-8"))}")
 
-    //{ response -> dataTextView.text = stringifyReturn(MSIParser.parseMSIData(response, "UTF-8"))}, // TODO: Make encoding more dynamic.
-    //{ error -> dataTextView.text = "That didn't work! - ${error.toString()} -\n" })
     fun connect(ip: String, user: String, pass: String) {
         val dashBoardText = context?.findViewById<TextView>(R.id.text_dashboard)
         val stringRequest = object: StringRequest(
                 Request.Method.GET, ip, { response -> dashBoardText?.text = stringifyReturn(MSIParser.parseMSIData(response, "UTF-8")) },
-                { error -> Log.e("Error","${error.toString()}")})
+                { error -> dashBoardText?.text = "That didn't work! - ${error.toString()} -\n" })
 
         {
             override fun getHeaders() : MutableMap<String,String> {
@@ -48,6 +45,7 @@ public class WidgetData(activity: FragmentActivity?) {
                 return headers
             }
         }
+
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
     }

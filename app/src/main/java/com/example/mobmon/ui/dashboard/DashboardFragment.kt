@@ -56,8 +56,7 @@ class DashboardFragment : Fragment() {
                 mainHandler.postDelayed(this, interval)
             }
         })
-        //widgetDataHandler.stringifiedResponse
-        Log.e("Pog","${dashboardViewModel.text}")
+
         return root
     }
 }
