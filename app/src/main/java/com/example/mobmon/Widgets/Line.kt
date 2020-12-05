@@ -1,5 +1,6 @@
 package com.example.mobmon.Widgets
 import android.util.Log
+import android.widget.ProgressBar
 
 class Line (val sentName:String) : Widget(){
     override val name = sentName
@@ -8,4 +9,8 @@ class Line (val sentName:String) : Widget(){
     override fun updateData(sentValues: MutableMap<String, MutableMap<String, String>>?){
         dataValues = sentValues
     }
+    //TODO: Update values from widgethandler instead ?
+    override var progressDrawable: ProgressBar
+        get() { return progressDrawable }
+        set(sentDrawable) {progressDrawable = sentDrawable}
 }

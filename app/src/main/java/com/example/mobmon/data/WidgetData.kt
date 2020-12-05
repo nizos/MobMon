@@ -17,6 +17,7 @@ public class WidgetData(activity: FragmentActivity?) {
     private var password: String = "17cc95b4017d496f82"
     lateinit var dataTextView: TextView
     private var dataResponse: String? = null
+    var mapResponse: MutableMap<String, MutableMap<String, String>> = mutableMapOf<String, MutableMap<String, String>>()
     //lateinit var mainHandler: Handler
     lateinit var queue: RequestQueue
     private var context = activity
@@ -32,6 +33,7 @@ public class WidgetData(activity: FragmentActivity?) {
 
     fun onMSIResponse(response : String) {
         dataResponse = stringifyReturn(MSIParser.parseMSIData(response, "UTF-8"));
+        mapResponse = MSIParser.parseMSIData(response, "UTF-8");
         //TODO: Add event listener for reading new information?
     }
 
@@ -53,7 +55,6 @@ public class WidgetData(activity: FragmentActivity?) {
                 return headers
             }
         }
-
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
     }
