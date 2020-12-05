@@ -45,7 +45,7 @@ class DashboardFragment : Fragment() {
             //widgetList[0].progressDrawable = root.findViewById<ProgressBar>(R.id.progress_bar)
             //------------------------------------------------
             val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
-            //TODO:
+            //TODO:Assign progress and text according to mutablemap -> widgetDataHandler.getDataResponse()
             circleBar?.setOnClickListener{
                 circleBar.progress += 3
             }
