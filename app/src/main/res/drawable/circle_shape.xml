@@ -5,5 +5,5 @@
     android:thickness="3dp"
     android:useLevel="false"
     >
-    <solid android:color="#009688"/>
+    <solid android:color="@color/neon_blue"/>
 </shape>

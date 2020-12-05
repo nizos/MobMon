@@ -78,6 +78,7 @@ class DashboardFragment : Fragment() {
     }
     fun popUpMenu(root: View) {
         val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
+        //TODO: Hold event instead
         circleBar.setOnClickListener(View.OnClickListener {
             //Creating the instance of PopupMenu
             val popup = PopupMenu(context, circleBar)
@@ -87,6 +88,7 @@ class DashboardFragment : Fragment() {
             //registering popup with OnMenuItemClickListener
             popup.setOnMenuItemClickListener { item ->
                 Toast.makeText(context, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
+                //TODO: Switch case for item
                 true
             }
             popup.show() //showing popup menu
