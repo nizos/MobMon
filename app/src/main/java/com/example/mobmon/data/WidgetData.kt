@@ -16,7 +16,7 @@ public class WidgetData(activity: FragmentActivity?) {
     private var username: String = "MSIAfterburner"
     private var password: String = "17cc95b4017d496f82"
     lateinit var dataTextView: TextView
-    var dataResponse: String? = null
+    private var dataResponse: String? = null
     //lateinit var mainHandler: Handler
     lateinit var queue: RequestQueue
     private var context = activity
@@ -31,8 +31,12 @@ public class WidgetData(activity: FragmentActivity?) {
     }
 
     fun onMSIResponse(response : String) {
-        testResponse = stringifyReturn(MSIParser.parseMSIData(response, "UTF-8"));
+        dataResponse = stringifyReturn(MSIParser.parseMSIData(response, "UTF-8"));
         //TODO: Add event listener for reading new information?
+    }
+
+    fun getDataResponse(): String?{
+        return dataResponse
     }
 
     fun connect(ip: String, user: String, pass: String) {

@@ -53,7 +53,7 @@ class DashboardFragment : Fragment() {
                 widgetDataHandler.update()
                 mainHandler.postDelayed(this, interval)
                 val dashBoardText = root.findViewById<TextView>(R.id.text_dashboard)
-                dashBoardText.text = widgetDataHandler.dataResponse
+                dashBoardText.text = widgetDataHandler.getDataResponse()
             }
         })
 
