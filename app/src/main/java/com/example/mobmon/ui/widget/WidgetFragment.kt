@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mobmon.R
-import com.example.mobmon.ui.widgets.WidgetsViewModel
+import com.example.mobmon.ui.widget.WidgetViewModel
 
 class WidgetFragment : Fragment() {
 
-    private lateinit var widgetViewModel: WidgetsViewModel
+    private lateinit var widgetViewModel: WidgetViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -21,7 +21,7 @@ class WidgetFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         widgetViewModel =
-                ViewModelProvider(this).get(WidgetsViewModel::class.java)
+                ViewModelProvider(this).get(WidgetViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_widget, container, false)
 
