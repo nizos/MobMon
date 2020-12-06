@@ -14,6 +14,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.mobmon.R
 import com.example.mobmon.Widgets.*
 import com.example.mobmon.data.WidgetData
@@ -51,7 +54,7 @@ class DashboardFragment : Fragment() {
         //widgetList[0].progressDrawable = root.findViewById<ProgressBar>(R.id.progress_bar)
         //------------------------------------------------
         val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
-        widgetPopUpMenu(circleBar, root)
+        showWidgetPopUpMenu(circleBar, root)
         val dashBoardText = root.findViewById<TextView>(R.id.text_dashboard)
 
         // TODO: Preferably add this to WidgetData class
@@ -76,7 +79,7 @@ class DashboardFragment : Fragment() {
         return root
     }
 
-    fun widgetPopUpMenu(sentProgressBar: ProgressBar, root: View) {
+    fun showWidgetPopUpMenu(sentProgressBar: ProgressBar, root: View) {
         sentProgressBar.setOnLongClickListener {
             //Creating the instance of PopupMenu
             val popup = PopupMenu(context, sentProgressBar)
@@ -84,7 +87,7 @@ class DashboardFragment : Fragment() {
             popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
             //registering popup with OnMenuItemClickListener
             popup.setOnMenuItemClickListener { item ->
-                handleWidgetMenuChoice(sentProgressBar, item)
+                handleWidgetMenuChoice(sentProgressBar, item,root)
                 true
             }
             //showing popup menu
@@ -94,9 +97,10 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem) {
+    //TODO: Add widget data as args to navgiation?
+    fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem, root: View) {
         when(item.title){
-            "Configure" -> Toast.makeText(context, "Go to: " + item.title + " fragment", Toast.LENGTH_SHORT).show()
+            "Configure" -> root.findNavController().navigate(R.id.action_dashboard_to_widget)
             "Remove" -> (bar.getParent() as ViewGroup).removeAllViews()
             "Cancel" -> Toast.makeText(context, "Cancel action", Toast.LENGTH_SHORT).show()
             else -> {
