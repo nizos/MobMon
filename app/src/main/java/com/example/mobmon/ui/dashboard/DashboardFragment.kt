@@ -3,23 +3,20 @@ package com.example.mobmon.ui.dashboard
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.mobmon.R
 import com.example.mobmon.Widgets.*
 import com.example.mobmon.data.WidgetData
+import java.lang.NumberFormatException
 
 
 // import com.example.mobmon.data.connect
@@ -64,11 +61,13 @@ class DashboardFragment : Fragment() {
                 mainHandler.postDelayed(this, interval)
                 //dashBoardText.text = widgetDataHandler.mapResponse.get("GPU usage").toString()
                 var sourceStringList: String = ""
-
+                setWidgetProperties(root,widgetDataHandler.mapResponse)
+                /*
                 widgetList.forEach {
                     //it.updateData(widgetDataHandler.mapResponse)
                     //it.printDataValues()
                 }
+                */
                 widgetDataHandler.mapResponse.forEach { entry ->
                     sourceStringList += (entry.key.toString())
                 }
@@ -79,8 +78,36 @@ class DashboardFragment : Fragment() {
         return root
     }
 
+    fun setWidgetProperties(root: View, mapResponse: MutableMap<String, MutableMap<String, String>>) {
+        val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
+        var widgetText = root.findViewById<TextView>(R.id.progress_text)
+        //circleBar.progress = mapResponse.get("GPU usage").
+        Log.e("mapresponse", "${mapResponse}")
+        var sb = StringBuilder()
+        sb.append(mapResponse?.get("GPU usage")?.get("localizedSrcName").toString())
+        sb.append("\n" + mapResponse?.get("GPU usage")?.get("localizedSrcUnits").toString())
+        sb.append(" " + mapResponse?.get("GPU usage")?.get("data").toString())
+        widgetText.text = sb
+        try {
+            val parseInt = mapResponse.get("GPU usage")?.get("data")?.toInt()
+            if (parseInt != null) {
+                circleBar.progress = parseInt
+            }
+        } catch (nfe: NumberFormatException) {
+            Log.e("Invalid", "Invalid number")
+        }
+
+    }
+
     fun showWidgetPopUpMenu(sentProgressBar: ProgressBar, root: View) {
+        val settingIcon = root.findViewById<ImageView>(R.id.widget_setting_button)
+
+        settingIcon.setOnClickListener{
+            root.findNavController().navigate(R.id.action_dashboard_to_widget)
+        }
+
         sentProgressBar.setOnLongClickListener {
+            settingIcon.visibility = View.VISIBLE
             //Creating the instance of PopupMenu
             val popup = PopupMenu(context, sentProgressBar)
             //Inflating the Popup using xml file
