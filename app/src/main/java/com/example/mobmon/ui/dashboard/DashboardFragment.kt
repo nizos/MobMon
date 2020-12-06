@@ -1,10 +1,10 @@
 package com.example.mobmon.ui.dashboard
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -50,16 +50,10 @@ class DashboardFragment : Fragment() {
         //-------------Stack overflow----------------------
         //widgetList[0].progressDrawable = root.findViewById<ProgressBar>(R.id.progress_bar)
         //------------------------------------------------
-
-        /*TODO:Assign progress and text according to mutablemap -> widgetDataHandler.getDataResponse()
         val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
-        circleBar?.setOnClickListener(){
-            circleBar.progress += 3
-        }
-        */
-        popUpMenu(root)
-
+        widgetPopUpMenu(circleBar, root)
         val dashBoardText = root.findViewById<TextView>(R.id.text_dashboard)
+
         // TODO: Preferably add this to WidgetData class
         mainHandler.post(object : Runnable {
             override fun run() {
@@ -82,24 +76,32 @@ class DashboardFragment : Fragment() {
         return root
     }
 
-    fun popUpMenu(root: View) {
-        val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
-        //TODO: Hold event instead
-        circleBar.setOnLongClickListener {
+    fun widgetPopUpMenu(sentProgressBar: ProgressBar, root: View) {
+        sentProgressBar.setOnLongClickListener {
             //Creating the instance of PopupMenu
-            val popup = PopupMenu(context, circleBar)
+            val popup = PopupMenu(context, sentProgressBar)
             //Inflating the Popup using xml file
             popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
-
             //registering popup with OnMenuItemClickListener
             popup.setOnMenuItemClickListener { item ->
-                Toast.makeText(context, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
-                //TODO: Switch case for item
+                handleWidgetMenuChoice(sentProgressBar, item)
                 true
             }
-            popup.show() //showing popup menu
+            //showing popup menu
+            popup.show()
             //closing the setOnClickListener method
             return@setOnLongClickListener true
+        }
+    }
+
+    fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem) {
+        when(item.title){
+            "Configure" -> Toast.makeText(context, "Go to: " + item.title + " fragment", Toast.LENGTH_SHORT).show()
+            "Remove" -> (bar.getParent() as ViewGroup).removeAllViews()
+            "Cancel" -> Toast.makeText(context, "Cancel action", Toast.LENGTH_SHORT).show()
+            else -> {
+                println("Nothing was selected")
+            }
         }
     }
 }
