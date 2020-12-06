@@ -81,11 +81,11 @@ class DashboardFragment : Fragment() {
         })
         return root
     }
-    
+
     fun popUpMenu(root: View) {
         val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
         //TODO: Hold event instead
-        circleBar.setOnClickListener(View.OnClickListener {
+        circleBar.setOnLongClickListener {
             //Creating the instance of PopupMenu
             val popup = PopupMenu(context, circleBar)
             //Inflating the Popup using xml file
@@ -98,6 +98,8 @@ class DashboardFragment : Fragment() {
                 true
             }
             popup.show() //showing popup menu
-        }) //closing the setOnClickListener method
+            //closing the setOnClickListener method
+            return@setOnLongClickListener true
+        }
     }
 }
