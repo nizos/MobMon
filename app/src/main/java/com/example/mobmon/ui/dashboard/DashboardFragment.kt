@@ -65,17 +65,23 @@ class DashboardFragment : Fragment() {
             override fun run() {
                 widgetDataHandler.update()
                 mainHandler.postDelayed(this, interval)
+                //dashBoardText.text = widgetDataHandler.mapResponse.get("GPU usage").toString()
+                var sourceStringList: String = ""
 
-                dashBoardText.text = widgetDataHandler.mapResponse.get("GPU usage").toString()
-                //dashBoardText.text = widgetDataHandler.getDataResponse()
                 widgetList.forEach {
-                    it.updateData(widgetDataHandler.mapResponse)
-                    it.printDataValues()
+                    //it.updateData(widgetDataHandler.mapResponse)
+                    //it.printDataValues()
                 }
+                widgetDataHandler.mapResponse.forEach { entry ->
+                    sourceStringList += (entry.key.toString())
+                }
+
+                dashBoardText.text = sourceStringList
             }
         })
         return root
     }
+    
     fun popUpMenu(root: View) {
         val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
         //TODO: Hold event instead
@@ -93,6 +99,5 @@ class DashboardFragment : Fragment() {
             }
             popup.show() //showing popup menu
         }) //closing the setOnClickListener method
-
     }
 }

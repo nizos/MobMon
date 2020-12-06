@@ -21,11 +21,14 @@ class WidgetsFragment : Fragment() {
     ): View? {
         widgetsViewModel =
             ViewModelProvider(this).get(WidgetsViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_widgets, container, false)
+        /*
         val textView: TextView = root.findViewById(R.id.text_widgets)
         widgetsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+        */
         return root
     }
 }
