@@ -21,4 +21,24 @@
     <string name="menu_sub_title_settings">Preferences</string>
     <string name="menu_sub_title_support">Help &amp; guides</string>
     <string name="menu_sub_title_about">Information</string>
+
+    <!-- CONNECTION SETTINGS STRINGS -->
+    <string name="passwordTextField">17cc95b4017d496f82</string>
+    <string name="usernameTextField">MSIAfterburner</string>
+    <string name="portTextField">34634</string>
+    <string name="ipAddressTextField1">127</string>
+    <string name="ipAddressTextField2">0</string>
+    <string name="ipAddressTextField3">0</string>
+    <string name="ipAddressTextField4">1</string>
+    <string name="updateIntervalTextField">1000</string>
+    <string name="press_connect_to_get_started">Press connect to get started!</string>
+    <string name="ip_address">Ip Address</string>
+    <string name="port">Port</string>
+    <string name="connect">Connect</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="update_interval_ms">Update Interval (ms)</string>
+    <string name="connection_settings">Connection Settings</string>
+    <!-- END CONNECTION SETTINGS STRINGS -->
+
 </resources>

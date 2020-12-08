@@ -4,30 +4,144 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:textColor="#A0A0A0"
     tools:context=".ui.settings.SettingsFragment">
+
+
+    <TextView
+        android:id="@+id/portTextFieldLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/port"
+        android:textColor="#A0A0A0"
+        app:layout_constraintStart_toStartOf="@+id/portTextField"
+        app:layout_constraintTop_toBottomOf="@+id/space4" />
 
     <Button
         android:id="@+id/connectButton"
         android:layout_width="260dp"
         android:layout_height="39dp"
-        android:layout_marginTop="25dp"
-        android:text="Connect"
+        android:text="@string/connect"
+        android:textColor="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UpdateIntervalTextField" />
+        app:layout_constraintTop_toBottomOf="@+id/space8" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="260dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space3">
+
+        <EditText
+            android:id="@+id/dot1"
+            android:layout_width="7dp"
+            android:layout_height="39dp"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="none"
+            android:text="."
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toEndOf="@+id/ipAddressTextField1"
+            app:layout_constraintTop_toBottomOf="@+id/ipAddressTextFieldLabel" />
+
+        <EditText
+            android:id="@+id/dot2"
+            android:layout_width="7dp"
+            android:layout_height="39dp"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="none"
+            android:text="."
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toEndOf="@+id/ipAddressTextField2"
+            app:layout_constraintTop_toBottomOf="@+id/ipAddressTextFieldLabel" />
+
+        <EditText
+            android:id="@+id/dot3"
+            android:layout_width="6dp"
+            android:layout_height="39dp"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="none"
+            android:text="."
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toEndOf="@+id/ipAddressTextField3"
+            app:layout_constraintTop_toBottomOf="@+id/ipAddressTextFieldLabel" />
+
+        <TextView
+            android:id="@+id/ipAddressTextFieldLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ip_address"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="@+id/ipAddressTextField1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/ipAddressTextField1"
+            android:layout_width="60dp"
+            android:layout_height="39dp"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="number"
+            android:text="@string/ipAddressTextField1"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ipAddressTextFieldLabel" />
+
+        <EditText
+            android:id="@+id/ipAddressTextField2"
+            android:layout_width="60dp"
+            android:layout_height="39dp"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="number"
+            android:text="@string/ipAddressTextField2"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toEndOf="@+id/dot1"
+            app:layout_constraintTop_toBottomOf="@+id/ipAddressTextFieldLabel" />
+
+        <EditText
+            android:id="@+id/ipAddressTextField3"
+            android:layout_width="60dp"
+            android:layout_height="39dp"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="number"
+            android:text="@string/ipAddressTextField3"
+            android:textColor="#A0A0A0"
+            app:layout_constraintStart_toEndOf="@+id/dot2"
+            app:layout_constraintTop_toBottomOf="@+id/ipAddressTextFieldLabel" />
+
+        <EditText
+            android:id="@+id/ipAddressTextField4"
+            android:layout_width="60dp"
+            android:layout_height="39dp"
+            android:ems="10"
+            android:gravity="right"
+            android:inputType="number"
+            android:text="@string/ipAddressTextField4"
+            android:textColor="#A0A0A0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dot3"
+            app:layout_constraintTop_toBottomOf="@+id/ipAddressTextFieldLabel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
-        android:id="@+id/ipAddressTextField"
+        android:id="@+id/portTextField"
         android:layout_width="260dp"
         android:layout_height="39dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="http://192.168.87.128:82/mahm"
+        android:inputType="number"
+        android:text="@string/portTextField"
+        android:textColor="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/IpAddressTextFieldLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/portTextFieldLabel" />
 
     <EditText
         android:id="@+id/usernameTextField"
@@ -35,11 +149,11 @@
         android:layout_height="39dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="MSIAfterburner"
+        android:text="@string/usernameTextField"
+        android:textColor="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UsernameTextFieldLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameTextFieldLabel" />
 
     <EditText
         android:id="@+id/passwordTextField"
@@ -47,47 +161,38 @@
         android:layout_height="39dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="17cc95b4017d496f82"
+        android:text="@string/passwordTextField"
+        android:textColor="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PasswordTextFieldLabel" />
-
-    <TextView
-        android:id="@+id/ipAddressTextFieldLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Ip Address"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="75dp" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextFieldLabel" />
 
     <TextView
         android:id="@+id/usernameTextFieldLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Username"
-        app:layout_constraintTop_toBottomOf="@+id/IpAddressTextField"
-        tools:layout_editor_absoluteX="75dp" />
+        android:text="@string/username"
+        android:textColor="#A0A0A0"
+        app:layout_constraintStart_toStartOf="@+id/usernameTextField"
+        app:layout_constraintTop_toBottomOf="@+id/space5" />
 
     <TextView
         android:id="@+id/passwordTextFieldLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Password"
-        app:layout_constraintTop_toBottomOf="@+id/UsernameTextField"
-        tools:layout_editor_absoluteX="75dp" />
+        android:text="@string/password"
+        android:textColor="#A0A0A0"
+        app:layout_constraintStart_toStartOf="@+id/passwordTextField"
+        app:layout_constraintTop_toBottomOf="@+id/space6" />
 
     <TextView
         android:id="@+id/updateIntervalTextFieldLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Update Interval (ms)"
-        app:layout_constraintTop_toBottomOf="@+id/PasswordTextField"
-        tools:layout_editor_absoluteX="75dp" />
+        android:text="@string/update_interval_ms"
+        android:textColor="#A0A0A0"
+        app:layout_constraintStart_toStartOf="@+id/updateIntervalTextField"
+        app:layout_constraintTop_toBottomOf="@+id/space7" />
 
     <EditText
         android:id="@+id/updateIntervalTextField"
@@ -95,34 +200,87 @@
         android:layout_height="39dp"
         android:ems="10"
         android:inputType="number"
-        android:text="1000"
+        android:text="@string/updateIntervalTextField"
+        android:textColor="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UpdateIntervalTextFieldLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/updateIntervalTextFieldLabel" />
 
     <TextView
-        android:id="@+id/dataTextView2"
-        android:layout_width="253dp"
-        android:layout_height="221dp"
-        android:layout_marginTop="19dp"
-        android:text="Press connect to get started!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/dataTextView"
+        android:layout_width="250dp"
+        android:layout_height="220dp"
+        android:text="@string/press_connect_to_get_started"
+        android:textColor="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConnectButton" />
+        app:layout_constraintTop_toBottomOf="@+id/space9" />
 
     <TextView
-        android:id="@+id/text_settings"
-        android:layout_width="match_parent"
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textColor="#99FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space_top" />
+
+    <Space
+        android:id="@+id/space_top"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Space
+        android:id="@+id/space3"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Space
+        android:id="@+id/space4"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        tools:layout_editor_absoluteX="204dp" />
+
+    <Space
+        android:id="@+id/space5"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/portTextField"
+        tools:layout_editor_absoluteX="209dp" />
+
+    <Space
+        android:id="@+id/space6"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/usernameTextField"
+        tools:layout_editor_absoluteX="191dp" />
+
+    <Space
+        android:id="@+id/space7"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextField"
+        tools:layout_editor_absoluteX="180dp" />
+
+    <Space
+        android:id="@+id/space8"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/updateIntervalTextField"
+        tools:layout_editor_absoluteX="188dp" />
+
+    <Space
+        android:id="@+id/space9"
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/connectButton"
+        tools:layout_editor_absoluteX="198dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
