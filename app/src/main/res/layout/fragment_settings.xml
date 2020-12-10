@@ -10,30 +10,36 @@
 
     <TextView
         android:id="@+id/portTextFieldLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/port"
-        android:textColor="#A0A0A0"
-        app:layout_constraintStart_toStartOf="@+id/portTextField"
-        app:layout_constraintTop_toBottomOf="@+id/space4" />
-
-    <Button
-        android:id="@+id/button_Save"
         android:layout_width="260dp"
-        android:layout_height="39dp"
-        android:text="@string/connect"
+        android:layout_height="20dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/port"
         android:textColor="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space8" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <Button
+        android:id="@+id/connectButton"
+        android:layout_width="260dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/connect"
+        android:textColor="#A0A0A0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateIntervalTextField" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="260dp"
         android:layout_height="60dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space3">
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
 
         <EditText
             android:id="@+id/dot1"
@@ -73,8 +79,8 @@
 
         <TextView
             android:id="@+id/ipAddressTextFieldLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="260dp"
+            android:layout_height="20dp"
             android:text="@string/ip_address"
             android:textColor="#A0A0A0"
             app:layout_constraintStart_toStartOf="@+id/ipAddressTextField1"
@@ -135,7 +141,6 @@
         android:id="@+id/portTextField"
         android:layout_width="260dp"
         android:layout_height="39dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="number"
         android:text="@string/portTextField"
@@ -145,10 +150,9 @@
         app:layout_constraintTop_toBottomOf="@+id/portTextFieldLabel" />
 
     <EditText
-        android:id="@+id/textField_Username"
+        android:id="@+id/usernameTextField"
         android:layout_width="260dp"
         android:layout_height="39dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/usernameTextField"
@@ -158,10 +162,9 @@
         app:layout_constraintTop_toBottomOf="@+id/usernameTextFieldLabel" />
 
     <EditText
-        android:id="@+id/textField_Password"
+        android:id="@+id/passwordTextField"
         android:layout_width="260dp"
         android:layout_height="39dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPassword"
         android:text="@string/passwordTextField"
@@ -170,44 +173,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextFieldLabel" />
 
-    <EditText
-        android:id="@+id/textField_Interval"
-        android:layout_width="260dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textFieldLabel_Interval" />
-
     <TextView
         android:id="@+id/usernameTextFieldLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="260dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="28dp"
         android:text="@string/username"
         android:textColor="#A0A0A0"
-        app:layout_constraintStart_toStartOf="@+id/usernameTextField"
-        app:layout_constraintTop_toBottomOf="@+id/space5" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/portTextField" />
 
     <TextView
-        android:id="@+id/textFieldLabel_Password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/passwordTextFieldLabel"
+        android:layout_width="260dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="28dp"
         android:text="@string/password"
         android:textColor="#A0A0A0"
-        app:layout_constraintStart_toStartOf="@+id/passwordTextField"
-        app:layout_constraintTop_toBottomOf="@+id/space6" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameTextField" />
 
     <TextView
-        android:id="@+id/textFieldLabel_Interval"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/updateIntervalTextFieldLabel"
+        android:layout_width="260dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="28dp"
         android:text="@string/update_interval_ms"
         android:textColor="#A0A0A0"
-        app:layout_constraintStart_toStartOf="@+id/updateIntervalTextField"
-        app:layout_constraintTop_toBottomOf="@+id/space7" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextField" />
 
     <EditText
         android:id="@+id/updateIntervalTextField"
@@ -218,85 +215,33 @@
         android:text="@string/updateIntervalTextField"
         android:textColor="#A0A0A0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.265"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateIntervalTextFieldLabel" />
 
     <TextView
         android:id="@+id/dataTextView"
-        android:layout_width="250dp"
-        android:layout_height="220dp"
+        android:layout_width="260dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="28dp"
         android:text="@string/press_connect_to_get_started"
         android:textColor="#A0A0A0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space9" />
+        app:layout_constraintTop_toBottomOf="@+id/connectButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space_top" />
-
-    <Space
-        android:id="@+id/space_top"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Space
-        android:id="@+id/space3"
-        android:layout_width="2dp"
-        android:layout_height="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <Space
-        android:id="@+id/space4"
-        android:layout_width="2dp"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-        tools:layout_editor_absoluteX="204dp" />
-
-    <Space
-        android:id="@+id/space5"
-        android:layout_width="2dp"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/portTextField"
-        tools:layout_editor_absoluteX="209dp" />
-
-    <Space
-        android:id="@+id/space6"
-        android:layout_width="2dp"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/usernameTextField"
-        tools:layout_editor_absoluteX="191dp" />
-
-    <Space
-        android:id="@+id/space7"
-        android:layout_width="2dp"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextField"
-        tools:layout_editor_absoluteX="180dp" />
-
-    <Space
-        android:id="@+id/space8"
-        android:layout_width="2dp"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/updateIntervalTextField"
-        tools:layout_editor_absoluteX="188dp" />
-
-    <Space
-        android:id="@+id/space9"
-        android:layout_width="2dp"
-        android:layout_height="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/connectButton"
-        tools:layout_editor_absoluteX="198dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
