@@ -31,45 +31,18 @@ class WidgetsFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_widgets, container, false)
         var listViewOfWidgets = root.findViewById<ListView>(R.id.widget_list)
         listViewOfWidgets.adapter = ArrayAdapter<String>(requireContext(), R.layout.listrow, keyStringArray)
-        //listViewOfWidgets.adapter = CustomAdapter(requireContext())
         //TODO: metricsData.value can be null
         metricsData.observe(viewLifecycleOwner, Observer {
             keyStringArray.clear()
             metricsData.value?.forEach { keyStringArray.add(it.key) }
             Log.i("Widgets", "${keyStringArray}")
-            //listViewOfWidgets.adapter = adapter
         });
 
         listViewOfWidgets.setOnItemClickListener { parent, view, position, id ->
             Toast.makeText(requireContext(),keyStringArray[position],Toast.LENGTH_SHORT).show()
+            //TODO: Navigate to specified widget settings and add to abstract classlist(widgetlist), might need string from communication
         }
 
         return root
-    }
-
-    private class CustomAdapter(context: Context): BaseAdapter() {
-        private val mContext: Context
-
-        init {
-            mContext = context
-        }
-
-        override fun getCount(): Int {
-            return 5
-        }
-
-        override fun getItem(position: Int): Any {
-            return position
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val textView = TextView(mContext)
-            textView.text = "Here is my row"
-            return textView
-        }
     }
 }

@@ -3,5 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textSize="30dp"
+    android:layout_marginBottom="3dp"
     android:textColor="@color/neon_blue"
     />
