@@ -22,6 +22,7 @@ object MainController {
         this.mainHandler?.post(object : Runnable {
             override fun run() {
                 update(address, username, password)
+
                 //Log.i("MobMonLOG", metricsData.value.toString())
                 this@MainController.mainHandler.postDelayed(this, interval.toLong())
             }

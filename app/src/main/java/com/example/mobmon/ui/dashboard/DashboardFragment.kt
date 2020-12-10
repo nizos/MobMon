@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.mobmon.R
 import com.example.mobmon.Widgets.*
 import com.example.mobmon.controller.MainController
+import com.example.mobmon.ui.widgets.WidgetsFragment
 
 
 // import com.example.mobmon.data.connect
@@ -21,6 +23,7 @@ import com.example.mobmon.controller.MainController
 class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
+    var widgetList = mutableListOf<Widget>()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -30,13 +33,14 @@ class DashboardFragment : Fragment() {
         dashboardViewModel =
                 ViewModelProvider(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
+        //val textView: TextView = root.findViewById(R.id.text_dashboard)
 
-        var widgetList = mutableListOf<Widget>()
         widgetList.add(Gauge("GPU usage"))
         widgetList.add(Gauge("Core clock"))
+
         MainController.metricsData.observe(viewLifecycleOwner, Observer {
             for(i in 0 until widgetList.count()){
+
                 var specifiedWidgetMap = MainController.metricsData.value?.get(widgetList[i].name)?.toMutableMap()
                 widgetList[i].updateData(specifiedWidgetMap)
                 Log.i("Dashboard","$specifiedWidgetMap")
