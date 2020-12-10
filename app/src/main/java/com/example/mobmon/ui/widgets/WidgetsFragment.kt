@@ -30,6 +30,7 @@ class WidgetsFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_widgets, container, false)
         //TODO: metricsData.value can be null
         metricsData.observe(viewLifecycleOwner, Observer {
+            keyStringArray.clear()
             metricsData.value?.forEach { keyStringArray.add(it.key) }
             Log.i("Widgets","${keyStringArray}")
         });

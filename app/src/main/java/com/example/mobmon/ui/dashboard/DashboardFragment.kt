@@ -40,7 +40,6 @@ class DashboardFragment : Fragment() {
 
         MainController.metricsData.observe(viewLifecycleOwner, Observer {
             for(i in 0 until widgetList.count()){
-
                 var specifiedWidgetMap = MainController.metricsData.value?.get(widgetList[i].name)?.toMutableMap()
                 widgetList[i].updateData(specifiedWidgetMap)
                 Log.i("Dashboard","$specifiedWidgetMap")
