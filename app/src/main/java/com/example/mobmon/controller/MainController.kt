@@ -16,7 +16,6 @@ object MainController {
     var mainHandler: Handler = Handler(Looper.getMainLooper())
     var metricsData = MutableLiveData<MutableMap<String, MutableMap<String,String>>>().apply {
         value = mutableMapOf<String, MutableMap<String,String>>()
-        Log.e("e","$value")
     }
 
     fun connect(address: String, username: String, password: String, interval: String) {

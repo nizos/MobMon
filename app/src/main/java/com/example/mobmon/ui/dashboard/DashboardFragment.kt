@@ -1,8 +1,6 @@
 package com.example.mobmon.ui.dashboard
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -16,8 +14,6 @@ import androidx.navigation.findNavController
 import com.example.mobmon.R
 import com.example.mobmon.Widgets.*
 import com.example.mobmon.controller.MainController
-import com.example.mobmon.controller.MainController.metricsData
-import java.lang.NumberFormatException
 
 
 // import com.example.mobmon.data.connect
@@ -37,11 +33,13 @@ class DashboardFragment : Fragment() {
         val textView: TextView = root.findViewById(R.id.text_dashboard)
 
         var widgetList = mutableListOf<Widget>()
-        widgetList.add(Gauge())
-        widgetList.add(Gauge())
+        widgetList.add(Gauge("GPU usage"))
+        widgetList.add(Gauge("Core clock"))
         MainController.metricsData.observe(viewLifecycleOwner, Observer {
             for(i in 0 until widgetList.count()){
-                widgetList[i].updateData(MainController.metricsData.value)
+                var specifiedWidgetMap = MainController.metricsData.value?.get(widgetList[i].name)?.toMutableMap()
+                widgetList[i].updateData(specifiedWidgetMap)
+                Log.i("Dashboard","$specifiedWidgetMap")
             }
         })
 
@@ -75,10 +73,12 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    //TODO: Add widget data as args to navgiation?
+    //TODO: Add widget data as args to navgiation? In order configure the specific widget
     fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem, root: View) {
         when(item.title){
-            "Configure" -> root.findNavController().navigate(R.id.action_dashboard_to_widget)
+            "Configure" -> {
+                root.findNavController().navigate(R.id.action_dashboard_to_widget)
+            }
             "Remove" -> (bar.getParent() as ViewGroup).removeAllViews() //TODO: Remove associated widget class
             "Cancel" -> Toast.makeText(context, "Cancel action", Toast.LENGTH_SHORT).show()
             else -> {
