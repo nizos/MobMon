@@ -32,6 +32,7 @@ class WidgetsFragment : Fragment() {
         var listViewOfWidgets = root.findViewById<ListView>(R.id.widget_list)
         listViewOfWidgets.adapter = ArrayAdapter<String>(requireContext(), R.layout.listrow, keyStringArray)
         //TODO: metricsData.value can be null
+        //TODO: add observer on abstractWidgetlist and its size instead?
         metricsData.observe(viewLifecycleOwner, Observer {
             keyStringArray.clear()
             metricsData.value?.forEach { keyStringArray.add(it.key) }
