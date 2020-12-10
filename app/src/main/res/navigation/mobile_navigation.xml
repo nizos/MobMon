@@ -9,8 +9,11 @@
         android:id="@+id/nav_dashboard"
         android:name="com.example.mobmon.ui.dashboard.DashboardFragment"
         android:label="@string/menu_title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboard_to_widget"
+            app:destination="@id/nav_widget"/>
+    </fragment>
     <fragment
         android:id="@+id/nav_widgets"
         android:name="com.example.mobmon.ui.widgets.WidgetsFragment"
@@ -40,5 +43,13 @@
         android:name="com.example.mobmon.ui.about.AboutFragment"
         android:label="@string/menu_title_about"
         tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/nav_widget"
+        android:name="com.example.mobmon.ui.widget.WidgetFragment"
+        android:label="fragment_widget"
+        tools:layout="@layout/fragment_widget">
+
+    </fragment>
 
 </navigation>
