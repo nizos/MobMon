@@ -7,6 +7,17 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
     <TextView
+        android:id="@+id/dataTextView"
+        android:layout_width="253dp"
+        android:layout_height="221dp"
+        android:layout_marginTop="19dp"
+        android:text="Press connect to get started!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/text_dashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

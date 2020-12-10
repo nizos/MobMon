@@ -21,4 +21,12 @@
     <string name="menu_sub_title_settings">Preferences</string>
     <string name="menu_sub_title_support">Help &amp; guides</string>
     <string name="menu_sub_title_about">Information</string>
+
+
+    <string name="settings_label_address">IP Address</string>
+    <string name="settings_label_username">Username</string>
+    <string name="settings_label_password">Password</string>
+    <string name="settings_label_interval">Update Interval (ms)</string>
+    <string name="settings_button_save">Save</string>
+    @string/
 </resources>
