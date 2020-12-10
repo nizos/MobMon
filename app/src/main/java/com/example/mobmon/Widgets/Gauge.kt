@@ -3,16 +3,12 @@ package com.example.mobmon.Widgets
 import android.util.Log
 import android.widget.ProgressBar
 
-class Gauge (val sentName:String) : Widget(){
-    override var name = sentName
+class Gauge () : Widget(){
+    override var name = ""
     override var widgetColor = "#FFFFFFFF" // White
     override var dataValues : MutableMap<String, MutableMap<String, String>>? = null
     override fun updateData(sentValues: MutableMap<String, MutableMap<String, String>>?){
         dataValues = sentValues
-        name = dataValues?.get(0)?.get("localizedSrcName").toString()
+        name = sentValues?.get("localizedSrcName").toString()
     }
-    //TODO: Update values from widgethandler instead?
-    override var progressDrawable: ProgressBar
-        get() { return progressDrawable }
-        set(sentDrawable) { progressDrawable.progress = 50}
 }

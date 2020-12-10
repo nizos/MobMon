@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.mobmon.R
 import com.example.mobmon.Widgets.*
+import com.example.mobmon.controller.MainController
+import com.example.mobmon.controller.MainController.metricsData
 import java.lang.NumberFormatException
 
 
@@ -23,9 +25,6 @@ import java.lang.NumberFormatException
 class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
-    val mainHandler = Handler(Looper.getMainLooper())
-    var interval: Long = 1000
-    lateinit var widgetText: TextView
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -36,38 +35,19 @@ class DashboardFragment : Fragment() {
                 ViewModelProvider(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
         val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
 
         var widgetList = mutableListOf<Widget>()
-        widgetList.add(Gauge("Gauge"))
-        //pass context
-        val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
-        showWidgetPopUpMenu(circleBar, root)
-
-        return root
-    }
-
-    fun setWidgetProperties(root: View, mapResponse: MutableMap<String, MutableMap<String, String>>?) {
-        val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
-
-        //circleBar.progress = mapResponse.get("GPU usage").
-        Log.e("mapresponse", "${mapResponse}")
-        var sb = StringBuilder()
-        sb.append(mapResponse?.get("GPU usage")?.get("localizedSrcName").toString())
-        sb.append("\n" + mapResponse?.get("GPU usage")?.get("localizedSrcUnits").toString())
-        sb.append(" " + mapResponse?.get("GPU usage")?.get("data").toString())
-        widgetText.text = sb
-        try {
-            val parseInt = mapResponse?.get("GPU usage")?.get("data")?.toInt()
-            if (parseInt != null) {
-                circleBar.progress = parseInt
+        widgetList.add(Gauge())
+        widgetList.add(Gauge())
+        MainController.metricsData.observe(viewLifecycleOwner, Observer {
+            for(i in 0 until widgetList.count()){
+                widgetList[i].updateData(MainController.metricsData.value)
             }
-        } catch (nfe: NumberFormatException) {
-            Log.e("Invalid", "Invalid number")
-        }
+        })
 
+        //val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
+        //showWidgetPopUpMenu(circleBar, root)
+        return root
     }
 
     fun showWidgetPopUpMenu(sentProgressBar: ProgressBar, root: View) {
@@ -99,7 +79,7 @@ class DashboardFragment : Fragment() {
     fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem, root: View) {
         when(item.title){
             "Configure" -> root.findNavController().navigate(R.id.action_dashboard_to_widget)
-            "Remove" -> (bar.getParent() as ViewGroup).removeAllViews()
+            "Remove" -> (bar.getParent() as ViewGroup).removeAllViews() //TODO: Remove associated widget class
             "Cancel" -> Toast.makeText(context, "Cancel action", Toast.LENGTH_SHORT).show()
             else -> {
                 println("Nothing was selected")

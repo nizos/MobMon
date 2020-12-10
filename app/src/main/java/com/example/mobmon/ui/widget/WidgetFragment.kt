@@ -30,6 +30,8 @@ class WidgetFragment : Fragment() {
             textView.text = it
         })
 
+
+
         return root
     }
 }

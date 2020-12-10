@@ -8,8 +8,8 @@
 
     <EditText
         android:id="@+id/search_field"
-        android:layout_width="252dp"
-        android:layout_height="48dp"
+        android:layout_width="225dp"
+        android:layout_height="46dp"
         android:layout_margin="5dp"
         android:layout_marginLeft="10dp"
         android:textColor="@color/white"
@@ -45,5 +45,10 @@
         app:layout_constraintVertical_bias="0.77"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        />
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="200dp">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="873dp"
+        android:background="@drawable/circle_shape"
+        android:progressDrawable="@drawable/circle_progress_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.289" />
+
+    <TextView
+        android:id="@+id/progress_text"
+        android:layout_width="641dp"
+        android:layout_height="174dp"
+        android:layout_alignLeft="@id/progress_bar"
+        android:layout_alignRight="@id/progress_bar"
+        android:layout_alignBottom="@+id/progress_bar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="165dp"
+        android:layout_marginLeft="165dp"
+        android:layout_marginTop="333dp"
+        android:layout_marginEnd="154dp"
+        android:layout_marginRight="154dp"
+        android:layout_marginBottom="366dp"
+        android:gravity="center"
+        android:text="no"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/widget_setting_button"
+        android:layout_width="153dp"
+        android:layout_height="148dp"
+        android:layout_alignLeft="@id/progress_text"
+        android:layout_alignRight="@id/progress_text"
+        android:layout_alignBottom="@id/progress_text"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="597dp"
+        android:layout_marginLeft="467dp"
+        android:layout_marginTop="121dp"
+        android:layout_marginEnd="210dp"
+        android:layout_marginRight="210dp"
+        android:layout_marginBottom="1439dp"
+        android:src="@drawable/icon_settings"
+        android:visibility="invisible"
+        app:tint="#99FFFFFF" />
+
+</RelativeLayout>
