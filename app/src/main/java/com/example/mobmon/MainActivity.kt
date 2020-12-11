@@ -18,6 +18,8 @@ import androidx.appcompat.widget.Toolbar
 import com.example.mobmon.Widgets.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
+
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
