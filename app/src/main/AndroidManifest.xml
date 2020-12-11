@@ -22,6 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.dashboard.DashboardActivity"
+            android:label="DashboardActivity"
+            android:theme="@style/Theme.Mobmon.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DESK_DOCK" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

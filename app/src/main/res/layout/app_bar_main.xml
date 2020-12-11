@@ -11,8 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:background="#00000000"
-        app:popupTheme="@style/Theme.Mobmon.PopupOverlay" />
+        android:background="#00000000"/>
 
     <include
         layout="@layout/content_main"
