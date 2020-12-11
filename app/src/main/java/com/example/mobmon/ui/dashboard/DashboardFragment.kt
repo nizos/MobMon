@@ -1,5 +1,6 @@
 package com.example.mobmon.ui.dashboard
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.cardview.widget.CardView
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.Observer
@@ -19,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 import com.example.mobmon.Widgets.*
 import com.example.mobmon.controller.MainController
 import com.example.mobmon.ui.widgets.WidgetsFragment
+import com.google.android.material.card.MaterialCardView
 
 
 // import com.example.mobmon.data.connect
@@ -30,6 +34,7 @@ class DashboardFragment : Fragment() {
     private val TAG = "mobmon"
     var widgetList = mutableListOf<Widget>()
 
+    @SuppressLint("ResourceType")
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -38,7 +43,15 @@ class DashboardFragment : Fragment() {
         dashboardViewModel =
                 ViewModelProvider(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        //val textView: TextView = root.findViewById(R.id.text_dashboard)
+
+        //Inflates a card layout and puts the widget inside, afterwards adding to dashboard
+        var dashBoardLayout = root.findViewById(R.id.parentCoordinatorLayout) as DraggableCoordinatorLayout
+        val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
+        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
+        val item: TextView? = widget?.findViewById(R.id.progress_text)
+        item?.text = "YO it works"
+        card.addView(widget)
+        dashBoardLayout.addView(card)
 
         widgetList.add(Gauge("GPU usage"))
         widgetList.add(Gauge("Core clock"))
@@ -50,12 +63,22 @@ class DashboardFragment : Fragment() {
                 Log.i("Dashboard","$specifiedWidgetMap")
             }
         })
+        /*
+        for(i in 0 until circleBar.childCount){
+            val nextChild = circleBar.getChildAt(i)
 
-        //val circleBar = root.findViewById<ProgressBar>(R.id.progress_bar)
-        //showWidgetPopUpMenu(circleBar, root)
+            //nextChild.javaClass.name.contains("Progressbar",true)
+            if(nextChild.javaClass.name.contains("Progressbar",true)){
+                Log.i("Dashboarad", nextChild.javaClass.name.toString())
+                var progressBar: ProgressBar = nextChild as ProgressBar
+                progressBar.progress
+                println("yo")
+            }
+        }
+        */
         return root
     }
-
+    /*
     fun showWidgetPopUpMenu(sentProgressBar: ProgressBar, root: View) {
         val settingIcon = root.findViewById<ImageView>(R.id.widget_setting_button)
 
@@ -94,4 +117,5 @@ class DashboardFragment : Fragment() {
             }
         }
     }
+    */
 }

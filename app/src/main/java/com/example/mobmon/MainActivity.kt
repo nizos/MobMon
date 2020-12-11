@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
 
 
 //        setContentView(R.layout.fragment_dashboard)
+        /*
         parentCoordinatorLayout.addDraggableChild(draggableCard1)
         parentCoordinatorLayout.addDraggableChild(draggableCard2)
         parentCoordinatorLayout.addDraggableChild(draggableCard3)
@@ -108,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "draggableCard4 Clicked!")
             true
         }
-
+        */
 
 
     }

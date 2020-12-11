@@ -23,73 +23,33 @@
         app:cardCornerRadius="6dp"
         app:cardElevation="3dp">
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:srcCompat="@drawable/house_part_1" />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle_shape"
+            android:progressDrawable="@drawable/circle_progress_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.289" />
 
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@id/progress_bar"
+            android:layout_alignRight="@id/progress_bar"
+            android:layout_alignBottom="@+id/progress_bar"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:text="no"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
     </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/draggableCard2"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardBackgroundColor="@android:color/background_dark"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="3dp">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:srcCompat="@drawable/house_part_2" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/draggableCard3"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardBackgroundColor="@android:color/background_dark"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="3dp">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:srcCompat="@drawable/house_part_3" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/draggableCard4"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardBackgroundColor="@android:color/background_dark"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="3dp">
-
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:srcCompat="@drawable/house_part_4" />
-    </com.google.android.material.card.MaterialCardView>
-
 </com.example.mobmon.DraggableCoordinatorLayout>
