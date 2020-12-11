@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         widgetList.add(Line("Line"))
 
 
-        setContentView(R.layout.fragment_dashboard)
+//        setContentView(R.layout.fragment_dashboard)
         parentCoordinatorLayout.addDraggableChild(draggableCard1)
         parentCoordinatorLayout.addDraggableChild(draggableCard2)
         parentCoordinatorLayout.addDraggableChild(draggableCard3)
