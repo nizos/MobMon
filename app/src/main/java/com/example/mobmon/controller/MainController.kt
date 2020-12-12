@@ -3,6 +3,7 @@ package com.example.mobmon.controller
 import android.os.Handler
 import android.os.Looper
 import android.util.Base64
+import android.util.Log
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -18,6 +19,7 @@ object MainController {
         this.mainHandler?.post(object : Runnable {
             override fun run() {
                 update(address, username, password)
+                Log.d("mobmon/connect", "Connecting to $address in $interval (ms) with the username [$username]")
                 this@MainController.mainHandler.postDelayed(this, interval.toLong())
             }
         })

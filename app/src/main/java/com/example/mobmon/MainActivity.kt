@@ -45,6 +45,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         Log.i(tag, "MainActivity --> onCreate")
         setContentView(R.layout.activity_main)
         context = this
+        appContext = this
         initView()
         frameLayout = findViewById<View>(R.id.container) as FrameLayout
         drawer = findViewById(R.id.drawer_layout)
