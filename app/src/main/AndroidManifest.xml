@@ -12,24 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mobmon"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Mobmon.NoActionBar">
+        <activity android:name=".ui.about.AboutActivity"></activity>
+        <activity android:name=".ui.dashboard.DashboardActivity"></activity>
+        <activity android:name=".ui.profiles.ProfilesActivity"></activity>
+        <activity android:name=".ui.settings.SettingsActivity"></activity>
+        <activity android:name=".ui.support.SupportActivity"></activity>
+        <activity android:name=".ui.widgets.WidgetsActivity"></activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.dashboard.DashboardActivity"
-            android:label="DashboardActivity"
-            android:theme="@style/Theme.Mobmon.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DESK_DOCK" />
             </intent-filter>
         </activity>
     </application>

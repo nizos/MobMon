@@ -10,13 +10,10 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <include layout="@layout/fragment_dashboard" />
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -28,7 +25,5 @@
         app:headerLayout="@layout/nav_header_main"
         app:itemIconTint="#60FFFFFF"
         app:itemTextColor="#60FFFFFF"
-        app:menu="@menu/activity_main_drawer" />
-
-
+        app:menu="@menu/activity_main_drawer"/>
 </androidx.drawerlayout.widget.DrawerLayout>
