@@ -14,6 +14,7 @@ import com.example.mobmon.data.MSIParser
 object MainController {
     var queue: RequestQueue = Volley.newRequestQueue(MainActivity.appContext)
     var mainHandler: Handler = Handler(Looper.getMainLooper())
+
     var metricsData = MutableLiveData<MutableMap<String, MutableMap<String,String>>>().apply {
         value = mutableMapOf<String, MutableMap<String, String>>()
     }
