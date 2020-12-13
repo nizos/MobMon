@@ -14,11 +14,15 @@ import com.google.android.material.card.MaterialCardView
 object WidgetController {
     var widgetList = mutableListOf<Widget>()
     var widgetListSize = MutableLiveData<Int>()
-    var mContext:DashboardActivity? = null
-    var cardList = mutableListOf<MaterialCardView>()
+    lateinit var mContext: DashboardActivity
+    val cardList: MutableList<MaterialCardView> = mutableListOf()
 
     fun setDaashBoardActivity(activity: DashboardActivity){
         mContext = activity
+    }
+
+    fun fuck() : DashboardActivity {
+        return mContext
     }
 
     fun addWidget(name: String,widgetType: String){

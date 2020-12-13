@@ -7,6 +7,7 @@ abstract class Widget {
     open val name : String = ""
     open var widgetColor : String = ""
     open var dataValues : MutableMap<String, String>? = null
+    open var posArr : IntArray = IntArray(2)
     open lateinit var widgetCard : MaterialCardView
     abstract fun updateData(sentValues: MutableMap<String, String>?)
 
