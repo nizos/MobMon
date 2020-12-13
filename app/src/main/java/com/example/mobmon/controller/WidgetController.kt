@@ -21,10 +21,6 @@ object WidgetController {
         mContext = activity
     }
 
-    fun fuck() : DashboardActivity {
-        return mContext
-    }
-
     fun addWidget(name: String,widgetType: String){
         if(mContext == null){
             Log.e("Widgetmanager","Error creating widget")

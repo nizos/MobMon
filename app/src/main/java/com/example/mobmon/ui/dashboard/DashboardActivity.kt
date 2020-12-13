@@ -2,11 +2,11 @@ package com.example.mobmon.ui.dashboard
 
 import android.os.Bundle
 import android.util.Log
+//import andr oid.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.view.get
 import androidx.lifecycle.Observer
 import com.example.mobmon.DraggableCoordinatorLayout
 import com.example.mobmon.MainActivity
@@ -25,63 +25,31 @@ class DashboardActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val rootView: View = layoutInflater.inflate(R.layout.activity_dashboard, frameLayout)
-
         WidgetController.setDaashBoardActivity(this)
         dashBoardLayout = rootView.findViewById(R.id.parentCoordinatorLayout) as DraggableCoordinatorLayout
 
-        MainController.metricsData.observe(this, {
-            for(i in 0 until WidgetController.widgetList.count()){
-                //Update widget data
-                var specifiedWidgetMap = MainController.metricsData.value?.get(WidgetController.widgetList[i].name)?.toMutableMap()
-                WidgetController.widgetList[i].updateData(specifiedWidgetMap)
-                //Update cards
-                updateCardVisuals(i)
-                WidgetController.cardList[i].refreshDrawableState()
-                //Log.i("Dashboard","$specifiedWidgetMap")
-            }
-        })
-    }
-
-    override fun onPause() {
-        super.onPause()
-        for(i in 0 until WidgetController.cardList.size){
-            var card = WidgetController.cardList[i]
-            dashBoardLayout.removeView(card)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
-        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
-        val item: TextView? = widget?.findViewById(R.id.progress_text)
-        item?.text = "yooo"
-        card.addView(widget)
-        WidgetController.cardList.add(card)
-        //parentCoordinatorLayout.addDraggableChild(card)
-        dashBoardLayout.addView(card)
-    }
-
-    fun updateCardVisuals(iteration: Int){
-        if(WidgetController.cardList.size == 0) return
-        var widget = WidgetController.cardList[iteration].getChildAt(0) as RelativeLayout
-        var progBar = widget.getChildAt(0) as ProgressBar
-        var progressValue = MainController.metricsData.value?.get(WidgetController.widgetList[iteration].name)?.get("data")?.substringBefore(".")
-        if (progressValue != null) {
-            progBar.progress = progressValue.toInt()
-        }
-        //WidgetController.cardList[iteration].refreshDrawableState()
         MainController.metricsData.observe(this, Observer {
             for(i in 0 until WidgetController.widgetList.count()){
                 Log.d("mobmon/observer", "Running observer! (onStart)")
                 var specifiedWidgetMap = it.get(WidgetController.widgetList[i].name)?.toMutableMap()
                 WidgetController.widgetList[i].updateData(specifiedWidgetMap)
                 Log.i("Dashboard","$specifiedWidgetMap")
+                updateCardVisuals(i)
             }
         })
     }
 
-    fun addCard(name: String){
+    fun updateCardVisuals(iteration: Int){
+        if(WidgetController.cardList.size == 0) return
+        var widget = WidgetController.cardList[iteration].getChildAt(0) as RelativeLayout
+        var progBar = widget.findViewById(R.id.progress_bar) as ProgressBar
+        var progressValue = MainController.metricsData.value?.get(WidgetController.widgetList[iteration].name)?.get("data")?.substringBefore(".")
+        if (progressValue != null) {
+            progBar.progress = progressValue.toInt()
+        }
+        WidgetController.cardList[iteration].refreshDrawableState()
+    }
+
     override fun onPause() {
         super.onPause()
 
@@ -106,25 +74,25 @@ class DashboardActivity : MainActivity() {
             val addCard = WidgetController.cardList[i]
 //            val cardClass = WidgetController.widgetList[i]
             dashBoardLayout.addView(addCard)
-
             parentCoordinatorLayout.addDraggableChild(addCard)
 
         }
     }
 
-    fun addCard(){
+    fun addCard(name: String){
         val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
         val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
+        val progBar = widget?.findViewById(R.id.progress_bar) as ProgressBar
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            progBar.max = MainController.metricsData.value?.get(name)?.getValue("maxLimit")?.toInt()
+                    ?: 100
+            progBar.min = 0
+        }
         val item: TextView? = widget?.findViewById(R.id.progress_text)
+
         item?.text = name + "\n" + "${MainController.metricsData.value?.get(name)?.getValue("srcUnits").toString()}"
+
         card.addView(widget)
         WidgetController.cardList.add(card)
-        //parentCoordinatorLayout.addDraggableChild(card)
-        dashBoardLayout.addView(card)
-        Log.e("DashboardCard","Card with the name ${name} created, CardListSize: ${WidgetController.cardList.size}")
-
-        if(!WidgetController.cardList.add(card)) {
-            Log.e("mobmon/cards", "FAILED TO ADD CARD")
-        }
     }
 }
