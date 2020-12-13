@@ -39,7 +39,8 @@ class WidgetsActivity : MainActivity() {
         */
         listViewOfWidgets.setOnItemClickListener { parent, view, position, id ->
             Toast.makeText(this,keyStringArray[position], Toast.LENGTH_SHORT).show()
-            WidgetController.addWidget(keyStringArray[position],"Gauge")
+            var widgetName = keyStringArray[position]
+            WidgetController.addWidget(widgetName,"Gauge")
             //TODO: Navigate to specified widget settings and add to abstract classlist(widgetlist), might need string from communication
         }
 

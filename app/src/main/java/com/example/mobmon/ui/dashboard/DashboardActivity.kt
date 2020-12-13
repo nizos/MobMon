@@ -3,7 +3,10 @@ package com.example.mobmon.ui.dashboard
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import com.example.mobmon.DraggableCoordinatorLayout
 import com.example.mobmon.MainActivity
@@ -24,34 +27,63 @@ class DashboardActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val rootView: View = layoutInflater.inflate(R.layout.activity_dashboard, frameLayout)
+
         WidgetController.setDaashBoardActivity(this)
         dashBoardLayout = rootView.findViewById(R.id.parentCoordinatorLayout) as DraggableCoordinatorLayout
 
-
-        val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
-        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
-        val item: TextView? = widget?.findViewById(R.id.progress_text)
-        item?.text = "YO it works"
-        card.addView(widget)
-        dashBoardLayout.addView(card)
-        parentCoordinatorLayout.addDraggableChild(card)
-
-        MainController.metricsData.observe(this, Observer {
+        MainController.metricsData.observe(this, {
             for(i in 0 until WidgetController.widgetList.count()){
+                //Update widget data
                 var specifiedWidgetMap = MainController.metricsData.value?.get(WidgetController.widgetList[i].name)?.toMutableMap()
                 WidgetController.widgetList[i].updateData(specifiedWidgetMap)
-                Log.i("Dashboard","$specifiedWidgetMap")
+                //Update cards
+                updateCardVisuals(i)
+                WidgetController.cardList[i].refreshDrawableState()
+                //Log.i("Dashboard","$specifiedWidgetMap")
             }
         })
     }
 
-    fun addCard(){
+    override fun onPause() {
+        super.onPause()
+        for(i in 0 until WidgetController.cardList.size){
+            var card = WidgetController.cardList[i]
+            dashBoardLayout.removeView(card)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
         val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
         val item: TextView? = widget?.findViewById(R.id.progress_text)
-        item?.text = "YO it works"
+        item?.text = "yooo"
         card.addView(widget)
+        WidgetController.cardList.add(card)
+        //parentCoordinatorLayout.addDraggableChild(card)
         dashBoardLayout.addView(card)
-        parentCoordinatorLayout.addDraggableChild(card)
+    }
+
+    fun updateCardVisuals(iteration: Int){
+        if(WidgetController.cardList.size == 0) return
+        var widget = WidgetController.cardList[iteration].getChildAt(0) as RelativeLayout
+        var progBar = widget.getChildAt(0) as ProgressBar
+        var progressValue = MainController.metricsData.value?.get(WidgetController.widgetList[iteration].name)?.get("data")?.substringBefore(".")
+        if (progressValue != null) {
+            progBar.progress = progressValue.toInt()
+        }
+        //WidgetController.cardList[iteration].refreshDrawableState()
+    }
+
+    fun addCard(name: String){
+        val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
+        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
+        val item: TextView? = widget?.findViewById(R.id.progress_text)
+        item?.text = name + "\n" + "${MainController.metricsData.value?.get(name)?.getValue("srcUnits").toString()}"
+        card.addView(widget)
+        WidgetController.cardList.add(card)
+        //parentCoordinatorLayout.addDraggableChild(card)
+        dashBoardLayout.addView(card)
+        Log.e("DashboardCard","Card with the name ${name} created, CardListSize: ${WidgetController.cardList.size}")
     }
 }

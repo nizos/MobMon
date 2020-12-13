@@ -9,22 +9,27 @@ import com.example.mobmon.R
 import com.example.mobmon.Widgets.Gauge
 import com.example.mobmon.Widgets.Widget
 import com.example.mobmon.ui.dashboard.DashboardActivity
+import com.google.android.material.card.MaterialCardView
 
 object WidgetController {
     var widgetList = mutableListOf<Widget>()
     var widgetListSize = MutableLiveData<Int>()
-    var mContext: Context? = null as DashboardActivity
+    var mContext:DashboardActivity? = null
+    var cardList = mutableListOf<MaterialCardView>()
 
     fun setDaashBoardActivity(activity: DashboardActivity){
         mContext = activity
     }
 
     fun addWidget(name: String,widgetType: String){
+        if(mContext == null){
+            Log.e("Widgetmanager","Error creating widget")
+            return
+        }
         when(widgetType){
             "Gauge" -> {
                 widgetList.add(Gauge(name))
-                mContext.addCard()
-                println("yoo")
+                mContext!!.addCard(name)
             }
             else -> {
                 Log.e("Widgetmanager","Error creating widget")
