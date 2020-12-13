@@ -3,19 +3,47 @@ package com.example.mobmon.ui.dashboard
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import androidx.lifecycle.Observer
 import com.example.mobmon.DraggableCoordinatorLayout
 import com.example.mobmon.MainActivity
 import com.example.mobmon.R
+import com.example.mobmon.Widgets.Gauge
+import com.example.mobmon.Widgets.Widget
+import com.example.mobmon.controller.MainController
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : MainActivity() {
     private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var coordinatorLayout: DraggableCoordinatorLayout
     private val tag = "mobmon"
+    var widgetList = mutableListOf<Widget>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val rootView: View = layoutInflater.inflate(R.layout.activity_dashboard, frameLayout)
         Log.i(tag, "Dashboard Activity")
+
+        //Inflates a card layout and puts the widget inside, afterwards adding to dashboard
+        var dashBoardLayout = rootView.findViewById(R.id.parentCoordinatorLayout) as DraggableCoordinatorLayout
+        val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
+        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
+        val item: TextView? = widget?.findViewById(R.id.progress_text)
+        item?.text = "YO it works"
+        card.addView(widget)
+        dashBoardLayout.addView(card)
+
+        widgetList.add(Gauge("GPU usage"))
+        widgetList.add(Gauge("Core clock"))
+
+        MainController.metricsData.observe(this, Observer {
+            for(i in 0 until widgetList.count()){
+                var specifiedWidgetMap = MainController.metricsData.value?.get(widgetList[i].name)?.toMutableMap()
+                widgetList[i].updateData(specifiedWidgetMap)
+                Log.i("Dashboard","$specifiedWidgetMap")
+            }
+        })
 
         parentCoordinatorLayout.addDraggableChild(draggableCard1)
         parentCoordinatorLayout.addDraggableChild(draggableCard2)
