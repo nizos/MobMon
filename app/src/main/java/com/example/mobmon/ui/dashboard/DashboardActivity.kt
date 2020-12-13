@@ -1,5 +1,6 @@
 package com.example.mobmon.ui.dashboard
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 //import andr oid.util.Log
@@ -34,17 +35,20 @@ class DashboardActivity : MainActivity() {
                 var specifiedWidgetMap = it.get(WidgetController.widgetList[i].name)?.toMutableMap()
                 WidgetController.widgetList[i].updateData(specifiedWidgetMap)
                 Log.i("Dashboard","$specifiedWidgetMap")
-                updateCardVisuals(i)
+                updateCardVisuals(WidgetController.widgetList[i].name,i)
             }
         })
     }
 
-    fun updateCardVisuals(iteration: Int){
+    fun updateCardVisuals(name: String,iteration: Int){
         if(WidgetController.cardList.size == 0) return
         var widget = WidgetController.cardList[iteration].getChildAt(0) as RelativeLayout
         var progBar = widget.findViewById(R.id.progress_bar) as ProgressBar
-        var progressValue = MainController.metricsData.value?.get(WidgetController.widgetList[iteration].name)?.get("data")?.substringBefore(".")
+        var textView = widget.findViewById(R.id.progress_text) as TextView
+        var progressValue: String? = MainController.metricsData.value?.get(WidgetController.widgetList[iteration].name)?.get("data")?.substringBefore(".")
         if (progressValue != null) {
+            textView?.text = name + "\n" + "${MainController.metricsData.value?.get(name)?.
+            getValue("srcUnits").toString()} " + progressValue.toString()
             progBar.progress = progressValue.toInt()
         }
         WidgetController.cardList[iteration].refreshDrawableState()
@@ -75,7 +79,6 @@ class DashboardActivity : MainActivity() {
 //            val cardClass = WidgetController.widgetList[i]
             dashBoardLayout.addView(addCard)
             parentCoordinatorLayout.addDraggableChild(addCard)
-
         }
     }
 
@@ -88,10 +91,6 @@ class DashboardActivity : MainActivity() {
                     ?: 100
             progBar.min = 0
         }
-        val item: TextView? = widget?.findViewById(R.id.progress_text)
-
-        item?.text = name + "\n" + "${MainController.metricsData.value?.get(name)?.getValue("srcUnits").toString()}"
-
         card.addView(widget)
         WidgetController.cardList.add(card)
     }
