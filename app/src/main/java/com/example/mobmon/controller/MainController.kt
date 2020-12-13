@@ -15,15 +15,14 @@ object MainController {
     var queue: RequestQueue = Volley.newRequestQueue(MainActivity.appContext)
     var mainHandler: Handler = Handler(Looper.getMainLooper())
 
-    var metricsData = MutableLiveData<MutableMap<String, MutableMap<String,String>>>().apply {
-        value = mutableMapOf<String, MutableMap<String, String>>()
-    }
+    var metricsData = MutableLiveData<MutableMap<String, MutableMap<String,String>>>()
 
     fun connect(address: String, username: String, password: String, interval: String) {
         this.mainHandler?.post(object : Runnable {
             override fun run() {
                 update(address, username, password)
                 Log.d("mobmon/connect", "Connecting to $address in $interval (ms) with the username [$username]")
+                Log.d("mobmon/metricsData", "MetricsData is ${metricsData.value?.size} entries big.")
                 this@MainController.mainHandler.postDelayed(this, interval.toLong())
             }
         })
@@ -33,7 +32,7 @@ object MainController {
         val stringRequest = object: StringRequest(
                 Method.GET, ip,
                 { response -> metricsData.apply { value = MSIParser.parseMSIData(response, "UTF-8") } }, // TODO: Make encoding more dynamic.
-                { error -> metricsData.apply { value = mutableMapOf() } })
+                { error -> metricsData.apply { Log.e("mobmon", error.toString()) } })
         {
             override fun getHeaders() : MutableMap<String,String> {
                 val headers = HashMap<String, String>()

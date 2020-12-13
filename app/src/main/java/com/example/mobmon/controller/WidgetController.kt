@@ -9,14 +9,20 @@ import com.example.mobmon.R
 import com.example.mobmon.Widgets.Gauge
 import com.example.mobmon.Widgets.Widget
 import com.example.mobmon.ui.dashboard.DashboardActivity
+import com.google.android.material.card.MaterialCardView
 
 object WidgetController {
     var widgetList = mutableListOf<Widget>()
     var widgetListSize = MutableLiveData<Int>()
-    var mContext: Context? = null as DashboardActivity
+    lateinit var mContext: DashboardActivity
+    val cardList: MutableList<MaterialCardView> = mutableListOf()
 
     fun setDaashBoardActivity(activity: DashboardActivity){
         mContext = activity
+    }
+
+    fun fuck() : DashboardActivity {
+        return mContext
     }
 
     fun addWidget(name: String,widgetType: String){
