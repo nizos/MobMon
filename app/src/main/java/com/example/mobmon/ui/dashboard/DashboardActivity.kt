@@ -111,12 +111,17 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         mSensorManager.unregisterListener(this)
 
         for(i in 0 until WidgetController.cardList.count()) {
-            val addCard = WidgetController.cardList[i]
-            val cardClass = WidgetController.widgetList[i]
-            cardClass.posX = addCard.x
-            cardClass.posY = addCard.y
-
-            dashBoardLayout.removeView(addCard)
+            val currentCard = WidgetController.cardList[i]
+            val currentWidget = WidgetController.widgetList[i]
+            Log.i(tag, "onPause for i: BEFORE")
+            Log.i(tag, "onPause for i: ${i.toString()} -> currentWidget.x = currentCard.posX -> ${currentWidget.posX} = ${currentCard.x}")
+            Log.i(tag, "onPause for i: ${i.toString()} -> currentWidget.y = currentCard.posY -> ${currentWidget.posY} = ${currentCard.y}")
+            currentWidget.posX = currentCard.x.toFloat()
+            currentWidget.posY = currentCard.y.toFloat()
+            Log.i(tag, "onPause for i: AFTER")
+            Log.i(tag, "onPause for i: ${i.toString()} -> currentWidget.x = currentWidget.posX -> ${currentWidget.posX} = ${currentCard.x}")
+            Log.i(tag, "onPause for i: ${i.toString()} -> currentWidget.y = currentWidget.posY -> ${currentWidget.posY} = ${currentCard.y}")
+            dashBoardLayout.removeView(currentCard)
         }
 
     }
@@ -134,9 +139,19 @@ class DashboardActivity : MainActivity(), SensorEventListener {
 */
         for(i in 0 until WidgetController.cardList.count()){
             val currentCard = WidgetController.cardList[i]
-//            val cardClass = WidgetController.widgetList[i]
+            val currentWidget = WidgetController.widgetList[i]
+            Log.i(tag, "onResume for i: BEFORE")
+            Log.i(tag, "onResume for i: ${i.toString()} -> currentCard.x = currentWidget.posX -> ${currentCard.x} = ${currentWidget.posX}")
+            Log.i(tag, "onResume for i: ${i.toString()} -> currentCard.y = currentWidget.posY -> ${currentCard.y} = ${currentWidget.posY}")
+            currentCard.x = currentWidget.posX.toFloat()
+            currentCard.y = currentWidget.posY.toFloat()
+            Log.i(tag, "onResume for i: AFTER")
+            Log.i(tag, "onResume for i: ${i.toString()} -> currentCard.x = currentWidget.posX -> ${currentCard.x} = ${currentWidget.posX}")
+            Log.i(tag, "onResume for i: ${i.toString()} -> currentCard.y = currentWidget.posY -> ${currentCard.y} = ${currentWidget.posY}")
 
             dashBoardLayout.addView(currentCard)
+            currentCard.x = currentWidget.posX.toFloat()
+            currentCard.y = currentWidget.posY.toFloat()
 
             parentCoordinatorLayout.setViewDragListener(object :
                     DraggableCoordinatorLayout.ViewDragListener {
@@ -161,13 +176,16 @@ class DashboardActivity : MainActivity(), SensorEventListener {
             progBar.min = 5000
         }
         card.addView(widget)
+        widget.id = View.generateViewId()
         parentCoordinatorLayout.addDraggableChild(widget)
         WidgetController.cardList.add(card)
     }
 
     fun addCard(name: String) {
         val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
+        card.id = View.generateViewId()
         val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
+        widget.id = View.generateViewId()
         val progBar = widget?.findViewById(R.id.progress_bar) as ProgressBar
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             progBar.max = MainController.metricsData.value?.get(name)?.getValue("maxLimit")?.toInt()

@@ -8,6 +8,7 @@ import android.view.ScaleGestureDetector
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.customview.widget.ViewDragHelper
+import com.example.mobmon.controller.WidgetController
 import kotlinx.android.synthetic.main.activity_dashboard.view.*
 import java.util.*
 
@@ -65,12 +66,14 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
 
         override fun onViewReleased(view: View, v: Float, v1: Float) {
             if (viewDragListener != null) {
-//                for (widget in WidgetController.widgetList) {
-//                    if (widget.name == view.resources.getResourcePackageName(view.id)) {
-//                        widget.posX = view.x
-//                        widget.posY = view.y
-//                    }
-//                }
+                for (card in WidgetController.cardList) {
+                    if (card.id == view.id) {
+                        Log.d(tag, "if (card.id == view.id) TRUE: card.id = ${card.id}, view.id = ${view.id}")
+                        val index = WidgetController.cardList.indexOf(card)
+                        WidgetController.widgetList[index].posX = view.x
+                        WidgetController.widgetList[index].posY = view.y
+                    }
+                }
                 Log.d(tag, "onViewReleased: id = ${view.id}, x = ${view.x.toString()}, y = ${view.y.toString()}")
                 viewDragListener!!.onViewReleased(view, v, v1)
             }
