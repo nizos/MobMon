@@ -2,15 +2,19 @@ package com.example.mobmon
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.customview.widget.ViewDragHelper
+import com.example.mobmon.controller.WidgetController
 import com.google.android.material.card.MaterialCardView
 import java.util.*
 
 class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null)
     : CoordinatorLayout(context!!, attrs) {
+
+
 
     /** A listener to use when a child view is dragged  */
     interface ViewDragListener {
@@ -23,6 +27,7 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
         fun onLongClick(view: View)
     }
 
+    private val tag = "mobmon"
     private val viewDragHelper: ViewDragHelper
     private val draggableChildren: MutableList<View> = ArrayList()
     private var viewDragListener: ViewDragListener? = null
@@ -60,6 +65,13 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
 
         override fun onViewReleased(view: View, v: Float, v1: Float) {
             if (viewDragListener != null) {
+                for (widget in WidgetController.widgetList) {
+                    if (widget.name == view.resources.getResourcePackageName(view.id)) {
+                        widget.posX = view.x
+                        widget.posY = view.y
+                    }
+                }
+                Log.d(tag, "onViewReleased: id = ${view.resources.getResourcePackageName(view.id)}, x = ${view.x.toString()}, y = ${view.y.toString()}")
                 viewDragListener!!.onViewReleased(view, v, v1)
             }
         }
