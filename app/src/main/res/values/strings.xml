@@ -48,5 +48,8 @@
     <string name="settings_label_password">Password</string>
     <string name="settings_label_interval">Update Interval (ms)</string>
     <string name="settings_button_save">Save</string>
+    <string name="installation_guide">Installation Guide</string>
+    <string name="created_by">Created By:</string>
+    <string name="version_control">Version Control</string>
     @string/
 </resources>

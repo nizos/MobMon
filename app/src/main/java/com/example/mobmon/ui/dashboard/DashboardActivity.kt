@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 //import andr oid.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -31,10 +32,9 @@ class DashboardActivity : MainActivity() {
 
         MainController.metricsData.observe(this, Observer {
             for(i in 0 until WidgetController.widgetList.count()){
-                Log.d("mobmon/observer", "Running observer! (onStart)")
-                var specifiedWidgetMap = it.get(WidgetController.widgetList[i].name)?.toMutableMap()
+                val specifiedWidgetMap = it.get(WidgetController.widgetList[i].name)?.toMutableMap()
                 WidgetController.widgetList[i].updateData(specifiedWidgetMap)
-                Log.i("Dashboard","$specifiedWidgetMap")
+//                Log.i("Dashboard","$specifiedWidgetMap")
                 updateCardVisuals(WidgetController.widgetList[i].name,i)
             }
         })
@@ -42,13 +42,13 @@ class DashboardActivity : MainActivity() {
 
     fun updateCardVisuals(name: String,iteration: Int){
         if(WidgetController.cardList.size == 0) return
-        var widget = WidgetController.cardList[iteration].getChildAt(0) as RelativeLayout
-        var progBar = widget.findViewById(R.id.progress_bar) as ProgressBar
-        var textView = widget.findViewById(R.id.progress_text) as TextView
-        var progressValue: String? = MainController.metricsData.value?.get(WidgetController.widgetList[iteration].name)?.get("data")?.substringBefore(".")
+        val widget = WidgetController.cardList[iteration].getChildAt(0) as RelativeLayout
+        val progBar = widget.findViewById(R.id.progress_bar) as ProgressBar
+        val textView = widget.findViewById(R.id.progress_text) as TextView
+        val progressValue: String? = MainController.metricsData.value?.get(WidgetController.widgetList[iteration].name)?.get("data")?.substringBefore(".")
         if (progressValue != null) {
-            textView?.text = name + "\n" + "${MainController.metricsData.value?.get(name)?.
-            getValue("srcUnits").toString()} " + progressValue.toString()
+            textView?.text = "%s \n %s %s".format(name, progressValue.toString(),
+                    MainController.metricsData.value?.get(name)?.getValue("srcUnits").toString())
             progBar.progress = progressValue.toInt()
         }
         WidgetController.cardList[iteration].refreshDrawableState()
@@ -60,10 +60,8 @@ class DashboardActivity : MainActivity() {
         for(i in 0 until WidgetController.cardList.count()) {
             val addCard = WidgetController.cardList[i]
             val cardClass = WidgetController.widgetList[i]
-
-            val posArr = IntArray(2)
-            addCard.getLocationOnScreen(posArr)
-            cardClass.posArr = posArr
+            cardClass.posX = addCard.x
+            cardClass.posY = addCard.y
 
             dashBoardLayout.removeView(addCard)
         }
@@ -72,11 +70,12 @@ class DashboardActivity : MainActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.i("mobmon/cards", "lateAdd has ${WidgetController.cardList.count()} cards to add. cards is ${WidgetController.cardList.hashCode()}")
+//        Log.i("mobmon/cards", "lateAdd has ${WidgetController.cardList.count()} cards to add. cards is ${WidgetController.cardList.hashCode()}")
 
         for(i in 0 until WidgetController.cardList.count()){
             val addCard = WidgetController.cardList[i]
 //            val cardClass = WidgetController.widgetList[i]
+
             dashBoardLayout.addView(addCard)
             parentCoordinatorLayout.addDraggableChild(addCard)
         }
