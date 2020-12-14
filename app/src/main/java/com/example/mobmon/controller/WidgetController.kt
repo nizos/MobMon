@@ -29,7 +29,10 @@ object WidgetController {
         when(widgetType){
             "Gauge" -> {
                 widgetList.add(Gauge(name))
-                mContext!!.addCard(name)
+                if(name == "Ambient Light")
+                    mContext!!.addLightSensorCard()
+                else
+                    mContext!!.addCard(name)
             }
             else -> {
                 Log.e("Widgetmanager","Error creating widget")

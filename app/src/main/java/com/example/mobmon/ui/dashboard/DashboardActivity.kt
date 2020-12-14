@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import com.example.mobmon.DraggableCoordinatorLayout
 import com.example.mobmon.MainActivity
 import com.example.mobmon.R
+import com.example.mobmon.Widgets.Widget
 import com.example.mobmon.controller.MainController
 import com.example.mobmon.controller.WidgetController
 import com.google.android.material.card.MaterialCardView
@@ -84,8 +85,18 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         val sVal = p0!!.values[0]
 
         if (p0.sensor.type == Sensor.TYPE_LIGHT){
-            val newValue: Int = (255f * sVal / maxSensorValue).roundToInt()
-            //Ambient Light
+            //Update ambient light widget visual values
+            for(i in 0 until WidgetController.cardList.count()){
+                if(WidgetController.widgetList[i].name == "Ambient Light"){
+                    val widget = WidgetController.cardList[i].getChildAt(0) as RelativeLayout
+                    val textView = widget.findViewById(R.id.progress_text) as TextView
+                    val progBar = widget.findViewById(R.id.progress_bar) as ProgressBar
+                    textView?.text = "%s \n %s %s".format("Ambient Light", sVal, "Lum")
+                    progBar.progress = sVal.toInt()
+                    WidgetController.cardList[i].refreshDrawableState()
+                }
+
+            }
             Log.i("Light","Light changed to ${sVal} luminosity.")
         }
     }
@@ -108,7 +119,14 @@ class DashboardActivity : MainActivity(), SensorEventListener {
     override fun onResume() {
         super.onResume()
         mSensorManager.registerListener(this, mSensors, SensorManager.SENSOR_DELAY_FASTEST)
-
+/*
+        //See if ambient light card exists in widgetlist
+        for(i in 0 until WidgetController.widgetList.count()){
+            if(WidgetController.widgetList[i].name == "Ambient Light"){
+                addLightSensorCard()
+            }
+        }
+*/
         for(i in 0 until WidgetController.cardList.count()){
             val addCard = WidgetController.cardList[i]
 //            val cardClass = WidgetController.widgetList[i]
@@ -116,6 +134,19 @@ class DashboardActivity : MainActivity(), SensorEventListener {
             dashBoardLayout.addView(addCard)
             parentCoordinatorLayout.addDraggableChild(addCard)
         }
+    }
+
+    fun addLightSensorCard(){
+        val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
+        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
+        val progBar = widget?.findViewById(R.id.progress_bar) as ProgressBar
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            progBar.max = maxSensorValue.roundToInt()
+                    ?: 100
+            progBar.min = 5000
+        }
+        card.addView(widget)
+        WidgetController.cardList.add(card)
     }
 
     fun addCard(name: String){

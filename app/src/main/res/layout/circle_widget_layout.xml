@@ -25,7 +25,7 @@
     android:layout_alignParentTop="false"
     android:layout_alignParentEnd="false"
     android:gravity="center"
-    android:text="no"
+    android:text="Not set"
     android:textColor="@color/white"
     android:textSize="14sp"
     android:textStyle="bold" />
