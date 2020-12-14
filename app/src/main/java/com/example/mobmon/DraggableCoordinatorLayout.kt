@@ -2,14 +2,19 @@ package com.example.mobmon
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.customview.widget.ViewDragHelper
+import kotlinx.android.synthetic.main.activity_dashboard.view.*
 import java.util.*
 
 class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null)
     : CoordinatorLayout(context!!, attrs) {
+
+    private val tag = "mobmon"
 
     /** A listener to use when a child view is dragged  */
     interface ViewDragListener {
@@ -17,15 +22,14 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
         fun onViewReleased(view: View, v: Float, v1: Float)
     }
 
-    /** A listener to use when a child view is long clicked  */
-    interface ViewLongClickListener {
-        fun onLongClick(view: View)
+    interface ViewScaleListener {
+        fun onScale(detector: ScaleGestureDetector)
     }
 
     private val viewDragHelper: ViewDragHelper
     private val draggableChildren: MutableList<View> = ArrayList()
     private var viewDragListener: ViewDragListener? = null
-    private var viewLongClickListener: ViewLongClickListener? = null
+    private var viewScaleListener:ViewScaleListener? = null
 
     fun addDraggableChild(child: View) {
         require(!(child.parent !== this))
@@ -59,6 +63,7 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
 
         override fun onViewReleased(view: View, v: Float, v1: Float) {
             if (viewDragListener != null) {
+                Log.d(tag, "onViewReleased: id = ${view.resources.getResourcePackageName(view.id)}, x = ${view.x.toString()}, y = ${view.y.toString()}")
                 viewDragListener!!.onViewReleased(view, v, v1)
             }
         }
@@ -82,11 +87,36 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
     }
 
     private fun viewIsDraggableChild(view: View): Boolean {
-        return draggableChildren.isEmpty() || draggableChildren.contains(view)
+
+        var allowDrag = false
+        when (view.id) {
+            R.id.draggableCard1 -> allowDrag = draggableCard1.isChecked
+            R.id.draggableCard2 -> allowDrag = draggableCard2.isChecked
+            R.id.draggableCard3 -> allowDrag = draggableCard3.isChecked
+            R.id.draggableCard4 -> allowDrag = draggableCard4.isChecked
+        }
+//        val resourceId = context.resources.getIdentifier(
+//                view.resources.getResourceEntryName(view.id),
+//                "drawable",
+//                context.packageName
+//        )
+//        var newView: View = findViewById(R.id.$resourceId)
+//        Log.d(tag, "viewIsDraggableChild: newView = ${view.getResources().getResourceName(view.()) newView . contentDescription . toString ()}")
+//        Log.d(tag, "allowDrag = ${allowDrag.toString() }")
+//
+//        var myNewView: View = findViewById(view.id)
+//        Log.d(tag, "view = ${ view.toString() }")
+//        Log.d(tag, "myNewView = ${ myNewView.toString() }")
+
+        return draggableChildren.isEmpty() || draggableChildren.contains(view) && allowDrag
     }
 
     fun setViewDragListener(viewDragListener: ViewDragListener?) {
         this.viewDragListener = viewDragListener
+    }
+
+    fun setViewScaleListener(viewScaleListener: ViewScaleListener?) {
+        this.viewScaleListener = viewScaleListener
     }
 
     init {
