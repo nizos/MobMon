@@ -14,7 +14,7 @@ import com.google.android.material.card.MaterialCardView
 object WidgetController {
     var widgetList = mutableListOf<Widget>()
     var widgetListSize = MutableLiveData<Int>()
-    lateinit var mContext: DashboardActivity
+    var mContext: DashboardActivity? = null
     val cardList: MutableList<MaterialCardView> = mutableListOf()
 
     fun setDaashBoardActivity(activity: DashboardActivity){

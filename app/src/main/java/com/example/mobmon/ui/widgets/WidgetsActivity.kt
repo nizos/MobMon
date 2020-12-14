@@ -25,18 +25,14 @@ class WidgetsActivity : MainActivity() {
 
         var listViewOfWidgets = rootView.findViewById<ListView>(R.id.widget_list)
         listViewOfWidgets.adapter = ArrayAdapter<String>(this, R.layout.listrow, keyStringArray)
-        //TODO: metricsData.value can be null
-        //TODO: add observer on abstractWidgetlist and its size instead?
+
         MainController.metricsData.observe(this, Observer {
             keyStringArray.clear()
+            keyStringArray.add("Ambient Light")
             MainController.metricsData.value?.forEach { keyStringArray.add(it.key) }
             Log.i("Widgets", "${keyStringArray}")
         });
-        /*
-        var intent: Intent = Intent(this,WidgetController::class.java).apply {
-            putExtra()
-        }
-        */
+
         listViewOfWidgets.setOnItemClickListener { parent, view, position, id ->
             Toast.makeText(this,keyStringArray[position], Toast.LENGTH_SHORT).show()
             var widgetName = keyStringArray[position]

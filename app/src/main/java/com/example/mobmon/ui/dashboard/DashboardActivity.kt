@@ -1,6 +1,12 @@
 package com.example.mobmon.ui.dashboard
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Color
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 //import andr oid.util.Log
@@ -17,18 +23,33 @@ import com.example.mobmon.controller.MainController
 import com.example.mobmon.controller.WidgetController
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlin.math.roundToInt
 
-class DashboardActivity : MainActivity() {
+class DashboardActivity : MainActivity(), SensorEventListener {
     private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var coordinatorLayout: DraggableCoordinatorLayout
     private val tag = "mobmon"
     private lateinit var dashBoardLayout: DraggableCoordinatorLayout
+    private lateinit var mSensorManager: SensorManager
+    private var mSensors: Sensor? = null
+    private var maxSensorValue: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val rootView: View = layoutInflater.inflate(R.layout.activity_dashboard, frameLayout)
         WidgetController.setDaashBoardActivity(this)
         dashBoardLayout = rootView.findViewById(R.id.parentCoordinatorLayout) as DraggableCoordinatorLayout
+
+        mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        mSensors = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+
+        if (mSensors != null) {
+            maxSensorValue = mSensors!!.maximumRange
+            Log.v("Sensors","Success")
+        } else {
+            // Failure!
+            Log.v("Sensors","No sensor found")
+        }
 
         MainController.metricsData.observe(this, Observer {
             for(i in 0 until WidgetController.widgetList.count()){
@@ -54,8 +75,24 @@ class DashboardActivity : MainActivity() {
         WidgetController.cardList[iteration].refreshDrawableState()
     }
 
+    //Only here because its an abstract function
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+
+    }
+
+    override fun onSensorChanged(p0: SensorEvent?) {
+        val sVal = p0!!.values[0]
+
+        if (p0.sensor.type == Sensor.TYPE_LIGHT){
+            val newValue: Int = (255f * sVal / maxSensorValue).roundToInt()
+            //Ambient Light
+            Log.i("Light","Light changed to ${sVal} luminosity.")
+        }
+    }
+
     override fun onPause() {
         super.onPause()
+        mSensorManager.unregisterListener(this)
 
         for(i in 0 until WidgetController.cardList.count()) {
             val addCard = WidgetController.cardList[i]
@@ -70,7 +107,7 @@ class DashboardActivity : MainActivity() {
 
     override fun onResume() {
         super.onResume()
-//        Log.i("mobmon/cards", "lateAdd has ${WidgetController.cardList.count()} cards to add. cards is ${WidgetController.cardList.hashCode()}")
+        mSensorManager.registerListener(this, mSensors, SensorManager.SENSOR_DELAY_FASTEST)
 
         for(i in 0 until WidgetController.cardList.count()){
             val addCard = WidgetController.cardList[i]
