@@ -8,6 +8,7 @@ import android.view.ScaleGestureDetector
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.customview.widget.ViewDragHelper
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.activity_dashboard.view.*
 import java.util.*
 
@@ -89,12 +90,11 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
     private fun viewIsDraggableChild(view: View): Boolean {
 
         var allowDrag = false
-        when (view.id) {
-            R.id.draggableCard1 -> allowDrag = draggableCard1.isChecked
-            R.id.draggableCard2 -> allowDrag = draggableCard2.isChecked
-            R.id.draggableCard3 -> allowDrag = draggableCard3.isChecked
-            R.id.draggableCard4 -> allowDrag = draggableCard4.isChecked
-        }
+        val cardView = view as MaterialCardView
+
+        if (cardView.isChecked)
+            allowDrag = true
+
 //        val resourceId = context.resources.getIdentifier(
 //                view.resources.getResourceEntryName(view.id),
 //                "drawable",

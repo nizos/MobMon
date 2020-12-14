@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.TextView
-import androidx.room.*
+
 //import andr oid.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.example.mobmon.DraggableCoordinatorLayout
 import com.example.mobmon.MainActivity
 import com.example.mobmon.R
 import com.example.mobmon.data.Widget
-import com.google.android.material.card.MaterialCardView
 import com.example.mobmon.controller.MainController
 import com.example.mobmon.controller.WidgetController
 import com.google.android.material.card.MaterialCardView
@@ -41,11 +39,14 @@ class DashboardActivity : MainActivity() {
         dashBoardLayout = rootView.findViewById(R.id.parentCoordinatorLayout) as DraggableCoordinatorLayout
 
         MainController.metricsData.observe(this, Observer {
-            for(i in 0 until WidgetController.widgetList.count()){
+            for (i in 0 until WidgetController.widgetList.count()) {
                 val specifiedWidgetMap = it.get(WidgetController.widgetList[i].name)?.toMutableMap()
                 WidgetController.widgetList[i].updateData(specifiedWidgetMap)
 //                Log.i("Dashboard","$specifiedWidgetMap")
-                updateCardVisuals(WidgetController.widgetList[i].name,i)
+                updateCardVisuals(WidgetController.widgetList[i].name, i)
+            }
+        })
+
 //        db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "mobmon").build()
 //        var widgets: List<Widget> = db.widgetDao().getAll()
 //        for (widget in widgets) {
@@ -54,30 +55,61 @@ class DashboardActivity : MainActivity() {
 //            card.x = widget.widgetPositionX!!
 //            card.y = widget.widgetPositionY!!
 //            dashBoardLayout.addDraggableChild(card)
-//        }
 
 //        gestureDetector = GestureDetector(this, this)
-        parentCoordinatorLayout.addDraggableChild(draggableCard1)
-        parentCoordinatorLayout.addDraggableChild(draggableCard2)
-        parentCoordinatorLayout.addDraggableChild(draggableCard3)
-        parentCoordinatorLayout.addDraggableChild(draggableCard4)
-
-        parentCoordinatorLayout.setViewDragListener(object :
-                DraggableCoordinatorLayout.ViewDragListener {
-            override fun onViewCaptured(view: View, i: Int) {
-
-                when (view.id) {
-                    R.id.draggableCard1 -> draggableCard1.isDragged = true
-                    R.id.draggableCard2 -> draggableCard2.isDragged = true
-                    R.id.draggableCard3 -> draggableCard3.isDragged = true
-                    R.id.draggableCard4 -> draggableCard4.isDragged = true
-                }
-            }
-        })
+//        parentCoordinatorLayout.addDraggableChild(draggableCard1)
+//        parentCoordinatorLayout.addDraggableChild(draggableCard2)
+//        parentCoordinatorLayout.addDraggableChild(draggableCard3)
+//        parentCoordinatorLayout.addDraggableChild(draggableCard4)
+//
+//        parentCoordinatorLayout.setViewDragListener(object :
+//                DraggableCoordinatorLayout.ViewDragListener {
+//            override fun onViewCaptured(view: View, i: Int) {
+//
+//                when (view.id) {
+//                    R.id.draggableCard1 -> draggableCard1.isDragged = true
+//                    R.id.draggableCard2 -> draggableCard2.isDragged = true
+//                    R.id.draggableCard3 -> draggableCard3.isDragged = true
+//                    R.id.draggableCard4 -> draggableCard4.isDragged = true
+//                }
+//            }
+//
+//            override fun onViewReleased(view: View, v: Float, v1: Float) {
+//                //TODO("Not yet implemented")
+//            }
+//        })
+//
+//        draggableCard1.setOnLongClickListener {
+//            draggableCard1.isChecked = !draggableCard1.isChecked
+//            draggableCard1.isSelected = !draggableCard1.isSelected
+//            Log.i(tag, "draggableCard1 Clicked!")
+//            true
+//        }
+//
+//        draggableCard2.setOnLongClickListener {
+//            draggableCard2.isChecked = !draggableCard2.isChecked
+//            draggableCard2.isSelected = !draggableCard2.isSelected
+//            Log.i(tag, "draggableCard2 Clicked!")
+//            true
+//        }
+//
+//        draggableCard3.setOnLongClickListener {
+//            draggableCard3.isChecked = !draggableCard3.isChecked
+//            draggableCard3.isSelected = !draggableCard3.isSelected
+//            Log.i(tag, "draggableCard3 Clicked!")
+//            true
+//        }
+//
+//        draggableCard4.setOnLongClickListener {
+//            draggableCard4.isChecked = !draggableCard4.isChecked
+//            draggableCard4.isSelected = !draggableCard4.isSelected
+//            Log.i(tag, "draggableCard4 Clicked!")
+//            true
+//        }
     }
 
-    fun updateCardVisuals(name: String,iteration: Int){
-        if(WidgetController.cardList.size == 0) return
+    fun updateCardVisuals(name: String, iteration: Int) {
+        if (WidgetController.cardList.size == 0) return
         val widget = WidgetController.cardList[iteration].getChildAt(0) as RelativeLayout
         val progBar = widget.findViewById(R.id.progress_bar) as ProgressBar
         val textView = widget.findViewById(R.id.progress_text) as TextView
@@ -86,72 +118,57 @@ class DashboardActivity : MainActivity() {
             textView?.text = "%s \n %s %s".format(name, progressValue.toString(),
                     MainController.metricsData.value?.get(name)?.getValue("srcUnits").toString())
             progBar.progress = progressValue.toInt()
+        }
 //        draggableCard1.setOnTouchListener(this)
 //        draggableCard2.setOnTouchListener(this)
 //        draggableCard3.setOnTouchListener(this)
 //        draggableCard4.setOnTouchListener(this)
 
-        draggableCard1.setOnLongClickListener {
-            draggableCard1.isChecked = !draggableCard1.isChecked
-            draggableCard1.isSelected = !draggableCard1.isSelected
-            Log.i(tag, "draggableCard1 Clicked!")
-            true
-        }
+
         WidgetController.cardList[iteration].refreshDrawableState()
     }
 
     override fun onPause() {
         super.onPause()
 
-        for(i in 0 until WidgetController.cardList.count()) {
+        for (i in 0 until WidgetController.cardList.count()) {
             val addCard = WidgetController.cardList[i]
             val cardClass = WidgetController.widgetList[i]
             cardClass.posX = addCard.x
             cardClass.posY = addCard.y
 
             dashBoardLayout.removeView(addCard)
-        draggableCard2.setOnLongClickListener {
-            draggableCard2.isChecked = !draggableCard2.isChecked
-            draggableCard2.isSelected = !draggableCard2.isSelected
-            Log.i(tag, "draggableCard2 Clicked!")
-            true
         }
-
     }
 
     override fun onResume() {
         super.onResume()
-//        Log.i("mobmon/cards", "lateAdd has ${WidgetController.cardList.count()} cards to add. cards is ${WidgetController.cardList.hashCode()}")
+        Log.i("mobmon/cards", "lateAdd has ${WidgetController.cardList.count()} cards to add. cards is ${WidgetController.cardList.hashCode()}")
 
-        for(i in 0 until WidgetController.cardList.count()){
+        for (i in 0 until WidgetController.cardList.count()) {
             val addCard = WidgetController.cardList[i]
 //            val cardClass = WidgetController.widgetList[i]
 
             dashBoardLayout.addView(addCard)
             parentCoordinatorLayout.addDraggableChild(addCard)
-        draggableCard3.setOnLongClickListener {
-            draggableCard3.isChecked = !draggableCard3.isChecked
-            draggableCard3.isSelected = !draggableCard3.isSelected
-            Log.i(tag, "draggableCard3 Clicked!")
-            true
         }
     }
 
-    fun addCard(name: String){
+    fun addCard(name: String) {
         val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
-        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
+        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null, false)
         val progBar = widget?.findViewById(R.id.progress_bar) as ProgressBar
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             progBar.max = MainController.metricsData.value?.get(name)?.getValue("maxLimit")?.toInt()
                     ?: 100
             progBar.min = 0
-        draggableCard4.setOnLongClickListener {
-            draggableCard4.isChecked = !draggableCard4.isChecked
-            draggableCard4.isSelected = !draggableCard4.isSelected
-            Log.i(tag, "draggableCard4 Clicked!")
-            true
         }
         card.addView(widget)
+        card.setOnLongClickListener {
+            card.isChecked = !card.isChecked
+            card.isSelected = !card.isSelected
+            true
+        }
         WidgetController.cardList.add(card)
     }
 
@@ -242,8 +259,7 @@ class DashboardActivity : MainActivity() {
 //        return false;
 //    }
 
-    inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-
-    }
-
+//    inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+//
+//    }
 }

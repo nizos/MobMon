@@ -9,8 +9,6 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.mobmon.MainActivity
 import com.example.mobmon.R
 import com.example.mobmon.controller.MainController
@@ -25,7 +23,27 @@ class WidgetsActivity : MainActivity() {
         val rootView: View = layoutInflater.inflate(R.layout.activity_widgets, frameLayout)
         Log.i(tag, "Widgets Activity")
 
+        var listViewOfWidgets = rootView.findViewById<ListView>(R.id.widget_list)
+        listViewOfWidgets.adapter = ArrayAdapter<String>(this, R.layout.listrow, keyStringArray)
+        //TODO: metricsData.value can be null
+        //TODO: add observer on abstractWidgetlist and its size instead?
+        MainController.metricsData.observe(this, Observer {
+            keyStringArray.clear()
+            MainController.metricsData.value?.forEach { keyStringArray.add(it.key) }
+            Log.i("Widgets", "${keyStringArray}")
+        });
+        /*
+        var intent: Intent = Intent(this,WidgetController::class.java).apply {
+            putExtra()
+        }
+        */
+        listViewOfWidgets.setOnItemClickListener { parent, view, position, id ->
+            Toast.makeText(this,keyStringArray[position], Toast.LENGTH_SHORT).show()
+            var widgetName = keyStringArray[position]
+            WidgetController.addWidget(widgetName,"Gauge")
+            Log.i("mobmon/addwidget", "Adding widget from listener. Size is [${WidgetController.widgetList.size}]")
+            //TODO: Navigate to specified widget settings and add to abstract classlist(widgetlist), might need string from communication
+        }
 
-        setupActionBarWithNavController(findNavController(R.id.activity_widgets_fragment))
     }
 }
