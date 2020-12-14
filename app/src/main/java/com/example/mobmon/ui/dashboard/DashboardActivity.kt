@@ -18,6 +18,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.iterator
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.mobmon.DraggableCoordinatorLayout
@@ -132,11 +133,21 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         }
 */
         for(i in 0 until WidgetController.cardList.count()){
-            val addCard = WidgetController.cardList[i]
+            val currentCard = WidgetController.cardList[i]
 //            val cardClass = WidgetController.widgetList[i]
 
-            dashBoardLayout.addView(addCard)
-            parentCoordinatorLayout.addDraggableChild(addCard)
+            dashBoardLayout.addView(currentCard)
+
+            parentCoordinatorLayout.setViewDragListener(object :
+                    DraggableCoordinatorLayout.ViewDragListener {
+                override fun onViewCaptured(view: View, i: Int) {
+                    currentCard.isDragged = true
+                }
+
+                override fun onViewReleased(view: View, v: Float, v1: Float) {
+                    currentCard.isDragged = false
+                }
+            })
         }
     }
 
@@ -150,6 +161,7 @@ class DashboardActivity : MainActivity(), SensorEventListener {
             progBar.min = 5000
         }
         card.addView(widget)
+        parentCoordinatorLayout.addDraggableChild(widget)
         WidgetController.cardList.add(card)
     }
 
@@ -163,6 +175,7 @@ class DashboardActivity : MainActivity(), SensorEventListener {
             progBar.min = 0
         }
         card.addView(widget)
+        parentCoordinatorLayout.addDraggableChild(widget)
         card.setOnLongClickListener {
 //            settingIcon.visibility = View.VISIBLE
             //Creating the instance of PopupMenu
@@ -184,6 +197,17 @@ class DashboardActivity : MainActivity(), SensorEventListener {
             //closing the setOnClickListener method
             true
         }
+
+        parentCoordinatorLayout.setViewDragListener(object :
+                DraggableCoordinatorLayout.ViewDragListener {
+            override fun onViewCaptured(view: View, i: Int) {
+                card.isDragged = true
+            }
+
+            override fun onViewReleased(view: View, v: Float, v1: Float) {
+                card.isDragged = false
+            }
+        })
         WidgetController.cardList.add(card)
     }
 

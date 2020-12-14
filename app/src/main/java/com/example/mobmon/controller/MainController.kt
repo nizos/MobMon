@@ -24,8 +24,8 @@ object MainController {
         this.mainHandler?.post(object : Runnable {
             override fun run() {
                 update(address, username, password)
-                Log.v("mobmon/connect", "Connecting to $address in $interval (ms) with the username [$username]")
-                Log.v("mobmon/metricsData", "MetricsData is ${metricsData.value?.size} entries big.")
+                // Log.v("mobmon/connect", "Connecting to $address in $interval (ms) with the username [$username]")
+                // Log.v("mobmon/metricsData", "MetricsData is ${metricsData.value?.size} entries big.")
                 this@MainController.mainHandler.postDelayed(this, interval.toLong())
             }
         })
