@@ -39,4 +39,13 @@ object WidgetController {
             }
         }
     }
+
+    fun removeCard(view: View) {
+        val position = cardList.indexOf(view)
+
+        if(position >= 0) {
+            cardList.removeAt(position)
+            widgetList.removeAt(position)
+        }
+    }
 }

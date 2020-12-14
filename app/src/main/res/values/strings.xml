@@ -51,5 +51,8 @@
     <string name="installation_guide">Installation Guide</string>
     <string name="created_by">Created By:</string>
     <string name="version_control">Version Control</string>
+    <string name="configure">Configure</string>
+    <string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
     @string/
 </resources>

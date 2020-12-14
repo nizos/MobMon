@@ -9,13 +9,17 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 //import andr oid.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.example.mobmon.DraggableCoordinatorLayout
 import com.example.mobmon.MainActivity
 import com.example.mobmon.R
@@ -149,7 +153,7 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         WidgetController.cardList.add(card)
     }
 
-    fun addCard(name: String){
+    fun addCard(name: String) {
         val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
         val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
         val progBar = widget?.findViewById(R.id.progress_bar) as ProgressBar
@@ -160,10 +164,42 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         }
         card.addView(widget)
         card.setOnLongClickListener {
+//            settingIcon.visibility = View.VISIBLE
+            //Creating the instance of PopupMenu
+            val popup = PopupMenu(this, card)
+            //Inflating the Popup using xml file
+            popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener { item ->
+                handleWidgetMenuChoice(progBar, item, card)
+                true
+            }
+            //showing popup menu
+            if(!card.isChecked)
+                popup.show()
+
             card.isChecked = !card.isChecked
             card.isSelected = !card.isSelected
+
+            //closing the setOnClickListener method
             true
         }
         WidgetController.cardList.add(card)
+    }
+
+    fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem, root: View) {
+        when(item.title){
+//            "Configure" -> {
+//                root.findNavController().navigate(R.id.action_dashboard_to_widget)
+//            }
+            "Remove" -> {
+                (bar.parent as ViewGroup).removeAllViews()
+                WidgetController.removeCard(root)
+            } //TODO: Remove associated widget class
+            "Cancel" -> Toast.makeText(this, "Cancel action", Toast.LENGTH_SHORT).show()
+            else -> {
+                println("Nothing was selected")
+            }
+        }
     }
 }
