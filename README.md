@@ -11,4 +11,4 @@ The MobMon application is dependent on being provided data from an external sour
 * MSI Afterburner Remote Server
 * (Optional) Rivatuner Statistics Server
 
-Finding out where to find these application and things to consider when you have installed them can be found on the Wiki of this repository.
+Finding out where to find these applications and things to consider when you have installed them can be found on the [Wiki of this repository](https://github.com/nizos/MobMon/wiki/Connection-Components-Installation-Guide)
