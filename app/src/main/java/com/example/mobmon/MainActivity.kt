@@ -39,6 +39,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     lateinit var connectionStatus: TextView
     lateinit var toggle: ActionBarDrawerToggle
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -52,6 +53,14 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         navigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
 
+        if(!hasStarted)
+        {
+            Toast.makeText(context, "You clicked on Dashboard", Toast.LENGTH_SHORT).show()
+            intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+            finish()
+            hasStarted = true
+        }
 //        var test: MutableMap<String, MutableMap<String, String>> = mutableMapOf<String,MutableMap<String,String>>()
 //        test.put("First Key", mutableMapOf(Pair("Second key","Value")))
 //        var widgetList = mutableListOf<Widget>()
@@ -146,5 +155,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     companion object {
         lateinit var appContext: Context
+        var hasStarted = false
     }
 }
