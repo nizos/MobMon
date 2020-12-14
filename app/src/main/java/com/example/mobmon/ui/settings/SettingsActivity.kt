@@ -3,16 +3,23 @@ package com.example.mobmon.ui.settings
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.InputFilter
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.mobmon.MainActivity
 import com.example.mobmon.R
 import com.example.mobmon.controller.MainController
+import com.example.mobmon.controller.WidgetController
+import com.example.mobmon.data.MSIParser
 
 class SettingsActivity : MainActivity() {
     private val tag = "mobmon"
@@ -125,7 +132,7 @@ class SettingsActivity : MainActivity() {
                     .putInt("Update Interval", updateFreq)
                     .apply()
             var address: String = "http://%d.%d.%d.%d:%d/mahm".format(ipSegment1, ipSegment2, ipSegment3, ipSegment4, portNumber)
-            MainController.connect(address, usernameTextField.text.toString(), passwordTextField.text.toString(), updateFreq.toString())
+           tryConnectOnce(address, usernameTextField.text.toString(), passwordTextField.text.toString(), updateFreq.toString())
 
             // TODO SIGNAL CONNECTION HANDLER THAT THERE ARE NEW DETAILS
         }
@@ -191,6 +198,42 @@ class SettingsActivity : MainActivity() {
         usernameTextField.setBackgroundResource(0)
         passwordTextField.setBackgroundResource(0)
         updateIntervalTextField.setBackgroundResource(0)
+    }
+
+    private fun tryConnectOnce(ip: String, user: String, pass: String, interval: String) {
+        Log.i("mobmon/connect", "Attempting one connection....")
+        var stringRequest = object: StringRequest(
+                Method.GET, ip,
+                {
+                    Log.i("mobmon/connect", "Successfully connected!")
+                    MainController.connect(ip, user, pass, interval)
+                }, // TODO: Make encoding more dynamic.
+                { error -> notifyConnectionError(error.toString())})
+        {
+            override fun getHeaders() : MutableMap<String,String> {
+                val headers = HashMap<String, String>()
+                val credentials = String.format("%s:%s", user, pass) // TODO: FORCE THIS TO USE APPLICATION SETTINGS FOR RETRIEVING USER/PASS
+                val auth = Base64.encodeToString(credentials.toByteArray(), Base64.NO_WRAP)
+                headers["Authorization"] = "Basic $auth"
+                return headers
+            }
+        }
+
+        MainController.queue.add(stringRequest)
+    }
+
+    fun notifyConnectionError(error: String) {
+        Log.e("mobmon/connection", "Running error notification")
+
+        val builder = NotificationCompat.Builder(this, "MobMon Connection")
+                .setSmallIcon(R.drawable.icon_about)
+                .setContentTitle("Could not connect!")
+                .setContentText(error)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(235235, builder.build())
+        }
     }
 }
 

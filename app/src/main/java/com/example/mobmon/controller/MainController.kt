@@ -4,11 +4,14 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Base64
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.mobmon.MainActivity
+import com.example.mobmon.R
 import com.example.mobmon.data.MSIParser
 
 object MainController {
@@ -21,8 +24,8 @@ object MainController {
         this.mainHandler?.post(object : Runnable {
             override fun run() {
                 update(address, username, password)
-                Log.d("mobmon/connect", "Connecting to $address in $interval (ms) with the username [$username]")
-                Log.d("mobmon/metricsData", "MetricsData is ${metricsData.value?.size} entries big.")
+                Log.v("mobmon/connect", "Connecting to $address in $interval (ms) with the username [$username]")
+                Log.v("mobmon/metricsData", "MetricsData is ${metricsData.value?.size} entries big.")
                 this@MainController.mainHandler.postDelayed(this, interval.toLong())
             }
         })
@@ -32,7 +35,7 @@ object MainController {
         val stringRequest = object: StringRequest(
                 Method.GET, ip,
                 { response -> metricsData.apply { value = MSIParser.parseMSIData(response, "UTF-8") } }, // TODO: Make encoding more dynamic.
-                { error -> metricsData.apply { Log.e("mobmon", error.toString()) } })
+                { error -> metricsData.apply { Log.e("mobmon/connect", error.toString()) } })
         {
             override fun getHeaders() : MutableMap<String,String> {
                 val headers = HashMap<String, String>()

@@ -97,7 +97,7 @@ class DashboardActivity : MainActivity(), SensorEventListener {
                 }
 
             }
-            Log.i("Light","Light changed to ${sVal} luminosity.")
+//            Log.i("Light","Light changed to ${sVal} luminosity.")
         }
     }
 
