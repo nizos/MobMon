@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.customview.widget.ViewDragHelper
+import com.google.android.material.card.MaterialCardView
 import java.util.*
 
 class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null)
@@ -82,7 +83,13 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
     }
 
     private fun viewIsDraggableChild(view: View): Boolean {
-        return draggableChildren.isEmpty() || draggableChildren.contains(view)
+        var draggable = false
+        val cardView = view as MaterialCardView
+
+        if (cardView.isChecked)
+            draggable = true
+
+        return draggableChildren.isEmpty() || draggableChildren.contains(view) && draggable
     }
 
     fun setViewDragListener(viewDragListener: ViewDragListener?) {

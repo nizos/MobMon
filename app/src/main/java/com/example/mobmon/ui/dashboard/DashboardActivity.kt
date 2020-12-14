@@ -159,6 +159,11 @@ class DashboardActivity : MainActivity(), SensorEventListener {
             progBar.min = 0
         }
         card.addView(widget)
+        card.setOnLongClickListener {
+            card.isChecked = !card.isChecked
+            card.isSelected = !card.isSelected
+            true
+        }
         WidgetController.cardList.add(card)
     }
 }
