@@ -123,18 +123,8 @@ class DashboardActivity : MainActivity(), SensorEventListener {
     override fun onResume() {
         super.onResume()
         mSensorManager.registerListener(this, mSensors, SensorManager.SENSOR_DELAY_FASTEST)
-/*
-        //See if ambient light card exists in widgetlist
-        for(i in 0 until WidgetController.widgetList.count()){
-            if(WidgetController.widgetList[i].name == "Ambient Light"){
-                addLightSensorCard()
-            }
-        }
-*/
         for(i in 0 until WidgetController.cardList.count()){
             val addCard = WidgetController.cardList[i]
-//            val cardClass = WidgetController.widgetList[i]
-
             dashBoardLayout.addView(addCard)
             parentCoordinatorLayout.addDraggableChild(addCard)
         }
@@ -150,6 +140,24 @@ class DashboardActivity : MainActivity(), SensorEventListener {
             progBar.min = 5000
         }
         card.addView(widget)
+        card.setOnLongClickListener {
+            //Creating the instance of PopupMenu
+            val popup = PopupMenu(this, card)
+            //Inflating the Popup using xml file
+            popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener { item ->
+                handleWidgetMenuChoice(progBar, item, card)
+                true
+            }
+            //show popup menu
+            if(!card.isChecked)
+                popup.show()
+            card.isChecked = !card.isChecked
+            card.isSelected = !card.isSelected
+            //closing the setOnClickListener method
+            true
+        }
         WidgetController.cardList.add(card)
     }
 
@@ -164,7 +172,6 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         }
         card.addView(widget)
         card.setOnLongClickListener {
-//            settingIcon.visibility = View.VISIBLE
             //Creating the instance of PopupMenu
             val popup = PopupMenu(this, card)
             //Inflating the Popup using xml file
@@ -174,13 +181,11 @@ class DashboardActivity : MainActivity(), SensorEventListener {
                 handleWidgetMenuChoice(progBar, item, card)
                 true
             }
-            //showing popup menu
+            //show popup menu
             if(!card.isChecked)
                 popup.show()
-
             card.isChecked = !card.isChecked
             card.isSelected = !card.isSelected
-
             //closing the setOnClickListener method
             true
         }
@@ -189,13 +194,10 @@ class DashboardActivity : MainActivity(), SensorEventListener {
 
     fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem, root: View) {
         when(item.title){
-//            "Configure" -> {
-//                root.findNavController().navigate(R.id.action_dashboard_to_widget)
-//            }
             "Remove" -> {
                 (bar.parent as ViewGroup).removeAllViews()
                 WidgetController.removeCard(root)
-            } //TODO: Remove associated widget class
+            }
             "Cancel" -> Toast.makeText(this, "Cancel action", Toast.LENGTH_SHORT).show()
             else -> {
                 println("Nothing was selected")
