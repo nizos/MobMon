@@ -9,7 +9,7 @@ import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.customview.widget.ViewDragHelper
 import com.example.mobmon.controller.WidgetController
-import kotlinx.android.synthetic.main.activity_dashboard.view.*
+import com.google.android.material.card.MaterialCardView
 import java.util.*
 
 class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null)
@@ -99,10 +99,14 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
 
     private fun viewIsDraggableChild(view: View): Boolean {
         var draggable = false
-        val cardView = view
+        val cardView = view as MaterialCardView
 
-//        if (cardView.isChecked)
+        if (cardView.isChecked) {
+            Log.d(tag, "viewIsDraggableChild: cardView.isChecked = ${cardView.isChecked}")
             draggable = true
+        } else {
+            Log.d(tag, "viewIsDraggableChild: cardView.isChecked is ${false}")
+        }
 
         return draggableChildren.isEmpty() || draggableChildren.contains(view) && draggable
     }

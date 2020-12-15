@@ -1,8 +1,7 @@
 package com.example.mobmon.ui.dashboard
 
-import android.annotation.SuppressLint
+
 import android.content.Context
-import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -10,7 +9,6 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-//import andr oid.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
@@ -18,13 +16,11 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.view.iterator
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import com.example.mobmon.DraggableCoordinatorLayout
 import com.example.mobmon.MainActivity
 import com.example.mobmon.R
-import com.example.mobmon.Widgets.Widget
 import com.example.mobmon.controller.MainController
 import com.example.mobmon.controller.WidgetController
 import com.google.android.material.card.MaterialCardView
@@ -51,23 +47,23 @@ class DashboardActivity : MainActivity(), SensorEventListener {
 
         if (mSensors != null) {
             maxSensorValue = mSensors!!.maximumRange
-            Log.v("Sensors","Success")
+            Log.v("Sensors", "Success")
         } else {
             // Failure!
-            Log.v("Sensors","No sensor found")
+            Log.v("Sensors", "No sensor found")
         }
 
         MainController.metricsData.observe(this, Observer {
-            for(i in 0 until WidgetController.widgetList.count()){
+            for (i in 0 until WidgetController.widgetList.count()) {
                 val specifiedWidgetMap = it.get(WidgetController.widgetList[i].name)?.toMutableMap()
                 WidgetController.widgetList[i].updateData(specifiedWidgetMap)
 //                Log.i("Dashboard","$specifiedWidgetMap")
-                updateCardVisuals(WidgetController.widgetList[i].name,i)
+                updateCardVisuals(WidgetController.widgetList[i].name, i)
             }
         })
     }
 
-    fun updateCardVisuals(name: String,iteration: Int){
+    fun updateCardVisuals(name: String, iteration: Int){
         if(WidgetController.cardList.size == 0) return
         val widget = WidgetController.cardList[iteration].getChildAt(0) as RelativeLayout
         val progBar = widget.findViewById(R.id.progress_bar) as ProgressBar
@@ -81,7 +77,7 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         WidgetController.cardList[iteration].refreshDrawableState()
     }
 
-    //Only here because its an abstract function
+    //Only here because its an abstract function <- Isn't that just wonderful :) ?
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
 
     }
@@ -109,49 +105,29 @@ class DashboardActivity : MainActivity(), SensorEventListener {
     override fun onPause() {
         super.onPause()
         mSensorManager.unregisterListener(this)
-
         for(i in 0 until WidgetController.cardList.count()) {
             val currentCard = WidgetController.cardList[i]
             val currentWidget = WidgetController.widgetList[i]
-            Log.i(tag, "onPause for i: BEFORE")
-            Log.i(tag, "onPause for i: ${i.toString()} -> currentWidget.x = currentCard.posX -> ${currentWidget.posX} = ${currentCard.x}")
-            Log.i(tag, "onPause for i: ${i.toString()} -> currentWidget.y = currentCard.posY -> ${currentWidget.posY} = ${currentCard.y}")
             currentWidget.posX = currentCard.x.toFloat()
             currentWidget.posY = currentCard.y.toFloat()
-            Log.i(tag, "onPause for i: AFTER")
-            Log.i(tag, "onPause for i: ${i.toString()} -> currentWidget.x = currentWidget.posX -> ${currentWidget.posX} = ${currentCard.x}")
-            Log.i(tag, "onPause for i: ${i.toString()} -> currentWidget.y = currentWidget.posY -> ${currentWidget.posY} = ${currentCard.y}")
             dashBoardLayout.removeView(currentCard)
         }
-
     }
 
     override fun onResume() {
         super.onResume()
         mSensorManager.registerListener(this, mSensors, SensorManager.SENSOR_DELAY_FASTEST)
-/*
-        //See if ambient light card exists in widgetlist
-        for(i in 0 until WidgetController.widgetList.count()){
-            if(WidgetController.widgetList[i].name == "Ambient Light"){
-                addLightSensorCard()
-            }
-        }
-*/
-        for(i in 0 until WidgetController.cardList.count()){
+
+        for (i in 0 until WidgetController.cardList.count()) {
             val currentCard = WidgetController.cardList[i]
             val currentWidget = WidgetController.widgetList[i]
-            Log.i(tag, "onResume for i: BEFORE")
-            Log.i(tag, "onResume for i: ${i.toString()} -> currentCard.x = currentWidget.posX -> ${currentCard.x} = ${currentWidget.posX}")
-            Log.i(tag, "onResume for i: ${i.toString()} -> currentCard.y = currentWidget.posY -> ${currentCard.y} = ${currentWidget.posY}")
-            currentCard.x = currentWidget.posX.toFloat()
-            currentCard.y = currentWidget.posY.toFloat()
-            Log.i(tag, "onResume for i: AFTER")
-            Log.i(tag, "onResume for i: ${i.toString()} -> currentCard.x = currentWidget.posX -> ${currentCard.x} = ${currentWidget.posX}")
-            Log.i(tag, "onResume for i: ${i.toString()} -> currentCard.y = currentWidget.posY -> ${currentCard.y} = ${currentWidget.posY}")
-
-            dashBoardLayout.addView(currentCard)
-            currentCard.x = currentWidget.posX.toFloat()
-            currentCard.y = currentWidget.posY.toFloat()
+            val factor: Float = dashBoardLayout.context.resources.displayMetrics.density
+            val size: Int = 150 * factor.toInt()
+            val params = RelativeLayout.LayoutParams(size, size)
+            params.leftMargin = currentWidget.posX.toInt()
+            params.topMargin = currentWidget.posY.toInt()
+            dashBoardLayout.addView(currentCard, params)
+            parentCoordinatorLayout.addDraggableChild(currentCard)
 
             parentCoordinatorLayout.setViewDragListener(object :
                     DraggableCoordinatorLayout.ViewDragListener {
@@ -168,34 +144,16 @@ class DashboardActivity : MainActivity(), SensorEventListener {
 
     fun addLightSensorCard(){
         val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
-        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
+        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null, false)
         val progBar = widget?.findViewById(R.id.progress_bar) as ProgressBar
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            progBar.max = maxSensorValue.roundToInt()
-                    ?: 100
+            progBar.max = maxSensorValue.roundToInt() ?: 100
             progBar.min = 5000
         }
         card.addView(widget)
         widget.id = View.generateViewId()
-        parentCoordinatorLayout.addDraggableChild(widget)
-        WidgetController.cardList.add(card)
-    }
-
-    fun addCard(name: String) {
-        val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
-        card.id = View.generateViewId()
-        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null,false)
-        widget.id = View.generateViewId()
-        val progBar = widget?.findViewById(R.id.progress_bar) as ProgressBar
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            progBar.max = MainController.metricsData.value?.get(name)?.getValue("maxLimit")?.toInt()
-                    ?: 100
-            progBar.min = 0
-        }
-        card.addView(widget)
-        parentCoordinatorLayout.addDraggableChild(widget)
+        parentCoordinatorLayout.addDraggableChild(card)
         card.setOnLongClickListener {
-//            settingIcon.visibility = View.VISIBLE
             //Creating the instance of PopupMenu
             val popup = PopupMenu(this, card)
             //Inflating the Popup using xml file
@@ -205,17 +163,50 @@ class DashboardActivity : MainActivity(), SensorEventListener {
                 handleWidgetMenuChoice(progBar, item, card)
                 true
             }
-            //showing popup menu
+            //show popup menu
             if(!card.isChecked)
                 popup.show()
-
             card.isChecked = !card.isChecked
             card.isSelected = !card.isSelected
-
             //closing the setOnClickListener method
             true
         }
+        WidgetController.cardList.add(card)
+    }
 
+    fun addCard(name: String) {
+        val card: MaterialCardView = layoutInflater.inflate(R.layout.material_card_layout, null) as MaterialCardView
+        card.id = View.generateViewId()
+        val widget: View = layoutInflater.inflate(R.layout.circle_widget_layout, null, false)
+        widget.id = View.generateViewId()
+        val progBar = widget?.findViewById(R.id.progress_bar) as ProgressBar
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            progBar.max = MainController.metricsData.value?.get(name)?.getValue("maxLimit")?.toInt()
+                    ?: 100
+            progBar.min = 0
+        }
+        card.addView(widget)
+        parentCoordinatorLayout.addDraggableChild(card)
+        val settingsIcon = ContextCompat.getDrawable(card.context, R.drawable.icon_settings)
+        card.checkedIcon = settingsIcon
+        card.setOnClickListener {
+            //Creating the instance of PopupMenu
+            val popup = PopupMenu(this, card)
+            //Inflating the Popup using xml file
+            popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+            //registering popup with OnMenuItemClickListener
+            popup.setOnMenuItemClickListener { item ->
+                handleWidgetMenuChoice(progBar, item, card)
+                true
+            }
+            //show popup menu
+            if(!card.isChecked)
+                popup.show()
+            card.isChecked = !card.isChecked
+            card.isSelected = !card.isSelected
+            //closing the setOnClickListener method
+            true
+        }
         parentCoordinatorLayout.setViewDragListener(object :
                 DraggableCoordinatorLayout.ViewDragListener {
             override fun onViewCaptured(view: View, i: Int) {
@@ -231,13 +222,10 @@ class DashboardActivity : MainActivity(), SensorEventListener {
 
     fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem, root: View) {
         when(item.title){
-//            "Configure" -> {
-//                root.findNavController().navigate(R.id.action_dashboard_to_widget)
-//            }
             "Remove" -> {
                 (bar.parent as ViewGroup).removeAllViews()
                 WidgetController.removeCard(root)
-            } //TODO: Remove associated widget class
+            }
             "Cancel" -> Toast.makeText(this, "Cancel action", Toast.LENGTH_SHORT).show()
             else -> {
                 println("Nothing was selected")
