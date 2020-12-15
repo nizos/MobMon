@@ -10,12 +10,13 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import com.example.mobmon.controller.MainController
 import com.example.mobmon.ui.about.AboutActivity
 import com.example.mobmon.ui.dashboard.DashboardActivity
 import com.example.mobmon.ui.profiles.ProfilesActivity
@@ -43,7 +44,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        Log.i(tag, "MainActivity --> onCreate")
         setContentView(R.layout.activity_main)
         context = this
         appContext = this
@@ -53,18 +53,20 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         navigationView = findViewById(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-        if(!hasStarted)
-        {
-            Toast.makeText(context, "You clicked on Dashboard", Toast.LENGTH_SHORT).show()
+        if (!hasStarted) {
             intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
             finish()
             hasStarted = true
         }
-//        var test: MutableMap<String, MutableMap<String, String>> = mutableMapOf<String,MutableMap<String,String>>()
-//        test.put("First Key", mutableMapOf(Pair("Second key","Value")))
-//        var widgetList = mutableListOf<Widget>()
-//        widgetList.add(Line("Line"))
+
+        MainController.status.observe(this, Observer {
+            newStatus -> if (newStatus) {
+            connectionStatus.text = "Connected"
+        } else {
+            connectionStatus.text = "Disconnected"
+        }
+        })
     }
 
     private fun initView() {
@@ -112,37 +114,31 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val intent: Intent
         when (id) {
             R.id.nav_dashboard -> {
-                Toast.makeText(context, "You clicked on Dashboard", Toast.LENGTH_SHORT).show()
                 intent = Intent(this, DashboardActivity::class.java)
                 startActivity(intent)
                 finish()
             }
             R.id.nav_profiles -> {
-                Toast.makeText(context, "You clicked on Profiles", Toast.LENGTH_SHORT).show()
                 intent = Intent(this, ProfilesActivity::class.java)
                 startActivity(intent)
                 finish()
             }
             R.id.nav_widgets -> {
-                Toast.makeText(context, "You clicked on Widgets", Toast.LENGTH_SHORT).show()
                 intent = Intent(this, WidgetsActivity::class.java)
                 startActivity(intent)
                 finish()
             }
             R.id.nav_settings -> {
-                Toast.makeText(context, "You clicked on Settings", Toast.LENGTH_SHORT).show()
                 intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
                 finish()
             }
             R.id.nav_support -> {
-                Toast.makeText(context, "You clicked on Support", Toast.LENGTH_SHORT).show()
                 intent = Intent(this, SupportActivity::class.java)
                 startActivity(intent)
                 finish()
             }
             R.id.nav_about -> {
-                Toast.makeText(context, "You clicked on About", Toast.LENGTH_SHORT).show()
                 intent = Intent(this, AboutActivity::class.java)
                 startActivity(intent)
                 finish()

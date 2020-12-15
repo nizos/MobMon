@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.Observer
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.android.volley.toolbox.StringRequest
@@ -41,19 +42,29 @@ class SettingsActivity : MainActivity() {
         val rootView: View = layoutInflater.inflate(R.layout.activity_settings, frameLayout)
         Log.i(tag, "Settings Activity")
 
-        //        //TODO PROBABLY MOVE THE MASTER KEY/SHARED PREFERENCES TO THE CONTROLLER
-        val masterKey = MasterKey.Builder(baseContext, "mobmon_connections_") // TODO Add profile name in here
+        //TODO PROBABLY MOVE THE MASTER KEY/SHARED PREFERENCES TO THE CONTROLLER
+        val masterKey = MasterKey.Builder(baseContext, "mobmon_connections_")
+        // TODO Add profile name in here
         val masterKeyAlias = masterKey.setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
 
         sharedPreferences = EncryptedSharedPreferences.create(
             baseContext,
-            "mobmon_connections_", // TODO Add profile name in here
+            // TODO Add profile name in here
+            "mobmon_connections_",
             masterKeyAlias,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
 
         val root = rootView
+        val statusText = root.findViewById<TextView>(R.id.connectionStatusText)
+        MainController.status.observe(this, Observer {
+            newStatus -> if (newStatus) {
+                statusText.text = "Connected"
+            } else {
+                statusText.text = "Disconnected"
+            }
+        })
 
         // Set up all text field bindings.
         ipTextField1 = root.findViewById(R.id.ipAddressTextField1)

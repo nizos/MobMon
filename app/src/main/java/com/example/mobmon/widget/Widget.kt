@@ -1,6 +1,5 @@
-package com.example.mobmon.Widgets
+package com.example.mobmon.widget
 
-import android.util.Log
 import com.google.android.material.card.MaterialCardView
 
 abstract class Widget {
@@ -11,6 +10,4 @@ abstract class Widget {
     open var posY : Float = 0.0f
     open lateinit var widgetCard : MaterialCardView
     abstract fun updateData(sentValues: MutableMap<String, String>?)
-
 }
-

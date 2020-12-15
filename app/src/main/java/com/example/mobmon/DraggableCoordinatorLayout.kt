@@ -2,7 +2,6 @@ package com.example.mobmon
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -25,12 +24,10 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
     private var viewDragListener: ViewDragListener? = null
 
     fun addDraggableChild(child: View) {
-//        require(!(child.parent !== this))
         draggableChildren.add(child)
     }
 
     fun removeDraggableChild(child: View) {
-//        require(!(child.parent !== this))
         draggableChildren.remove(child)
     }
 

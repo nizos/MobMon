@@ -27,22 +27,22 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlin.math.roundToInt
 
 class DashboardActivity : MainActivity(), SensorEventListener {
-    private lateinit var dashboardViewModel: DashboardViewModel
-    private lateinit var coordinatorLayout: DraggableCoordinatorLayout
     private val tag = "mobmon"
-    private lateinit var dashBoardLayout: DraggableCoordinatorLayout
-    private lateinit var mSensorManager: SensorManager
     private var mSensors: Sensor? = null
     private var maxSensorValue: Float = 0f
+    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var coordinatorLayout: DraggableCoordinatorLayout
+    private lateinit var dashBoardLayout: DraggableCoordinatorLayout
+    private lateinit var mSensorManager: SensorManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val rootView: View = layoutInflater.inflate(R.layout.activity_dashboard, frameLayout)
-        WidgetController.setDaashBoardActivity(this)
+        WidgetController.setDashBoardActivity(this)
         dashBoardLayout = rootView.findViewById(R.id.parentCoordinatorLayout) as DraggableCoordinatorLayout
-
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mSensors = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+
 
         if (mSensors != null) {
             maxSensorValue = mSensors!!.maximumRange
@@ -60,8 +60,6 @@ class DashboardActivity : MainActivity(), SensorEventListener {
                 updateCardVisuals(WidgetController.widgetList[i].name, i)
             }
         })
-
-
     }
 
     fun updateCardVisuals(name: String, iteration: Int){

@@ -17,8 +17,6 @@ class AboutActivity : MainActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val rootView: View = layoutInflater.inflate(R.layout.activity_about, frameLayout)
-        Log.i(tag, "About Activity")
-
         val aboutTextView = rootView.findViewById<TextView>(R.id.aboutTextView)
         aboutTextView.text = "Created By:\n\n" +
                 "Nizar Selander - nizos @ github\n" +
@@ -40,6 +38,4 @@ class AboutActivity : MainActivity() {
             startActivity(intent)
         }
     }
-
-
 }
