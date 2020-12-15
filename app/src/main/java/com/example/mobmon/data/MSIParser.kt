@@ -56,22 +56,22 @@ class MSIParser {
 
             while(event != XmlPullParser.END_DOCUMENT) {
                 when (event) {
-                    XmlPullParser.START_DOCUMENT -> Log.d("MSIParse", "Start of document parse.")
-                    XmlPullParser.END_DOCUMENT -> Log.d("MSIParse", "End of document parse.")
+                    // XmlPullParser.START_DOCUMENT -> Log.d("MSIParse", "Start of document parse.")
+                    // XmlPullParser.END_DOCUMENT -> Log.d("MSIParse", "End of document parse.")
                     XmlPullParser.START_TAG -> {
 
                         // Verbose logging, only for early debug.
                         //Log.v("MSIParse", "Found tag ${parser.name}")
 
                         when (parser.name) {
-                            in MSI_HEADER_TAGS -> Log.v("MSIParse", "Skipping header tag [${parser.name}]")
+                            // in MSI_HEADER_TAGS -> Log.v("MSIParse", "Skipping header tag [${parser.name}]")
                             in MSI_IGNORE_TAGS -> {
                                 val curDepth = parser.depth
                                 val skipName = parser.name
 
                                 do {
                                     parser.next()
-                                    Log.v("MSIParse", "Skipping tag [${parser.name}] due to it being below the tag [$skipName]")
+                                    // Log.v("MSIParse", "Skipping tag [${parser.name}] due to it being below the tag [$skipName]")
                                 } while (parser.depth != curDepth)
                             }
                             in MSI_CREATE_TAGS -> {
@@ -95,14 +95,14 @@ class MSIParser {
                             else
                                 currentMap[currentTag] = parser.text
                         }
-                        else
-                            Log.w("MSIParse", "Text property was null for ${parser.name} in a TEXT action")
+                        // else
+                        //     Log.w("MSIParse", "Text property was null for ${parser.name} in a TEXT action")
                     }
                 }
 
                 event = parser.next()
             }
-            Log.d("MSIParse", "Map contains ${returnMap.size} items, returning.")
+            // Log.d("MSIParse", "Map contains ${returnMap.size} items, returning.")
             return returnMap
         }
     }

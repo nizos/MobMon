@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.customview.widget.ViewDragHelper
@@ -34,12 +35,12 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
     private var viewLongClickListener: ViewLongClickListener? = null
 
     fun addDraggableChild(child: View) {
-        require(!(child.parent !== this))
+//        require(!(child.parent !== this))
         draggableChildren.add(child)
     }
 
     fun removeDraggableChild(child: View) {
-        require(!(child.parent !== this))
+//        require(!(child.parent !== this))
         draggableChildren.remove(child)
     }
 
@@ -65,13 +66,15 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
 
         override fun onViewReleased(view: View, v: Float, v1: Float) {
             if (viewDragListener != null) {
-                for (widget in WidgetController.widgetList) {
-                    if (widget.name == view.resources.getResourcePackageName(view.id)) {
-                        widget.posX = view.x
-                        widget.posY = view.y
+                for (card in WidgetController.cardList) {
+                    if (card.id == view.id) {
+                        Log.d(tag, "if (card.id == view.id) TRUE: card.id = ${card.id}, view.id = ${view.id}")
+                        val index = WidgetController.cardList.indexOf(card)
+                        WidgetController.widgetList[index].posX = view.x
+                        WidgetController.widgetList[index].posY = view.y
                     }
                 }
-                Log.d(tag, "onViewReleased: id = ${view.resources.getResourcePackageName(view.id)}, x = ${view.x.toString()}, y = ${view.y.toString()}")
+                Log.d(tag, "onViewReleased: id = ${view.id}, x = ${view.x.toString()}, y = ${view.y.toString()}")
                 viewDragListener!!.onViewReleased(view, v, v1)
             }
         }
@@ -98,8 +101,12 @@ class DraggableCoordinatorLayout @JvmOverloads constructor(context: Context?, at
         var draggable = false
         val cardView = view as MaterialCardView
 
-        if (cardView.isChecked)
+        if (cardView.isChecked) {
+            Log.d(tag, "viewIsDraggableChild: cardView.isChecked = ${cardView.isChecked}")
             draggable = true
+        } else {
+            Log.d(tag, "viewIsDraggableChild: cardView.isChecked is ${false}")
+        }
 
         return draggableChildren.isEmpty() || draggableChildren.contains(view) && draggable
     }
