@@ -2,6 +2,7 @@ package com.example.mobmon
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -62,10 +63,12 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         MainController.status.observe(this, Observer {
             newStatus -> if (newStatus) {
-            connectionStatus.text = "Connected"
-        } else {
-            connectionStatus.text = "Disconnected"
-        }
+                connectionStatus.text = "Connected"
+                connectionStatus.setTextColor(Color.parseColor("#009688"))
+            } else {
+                connectionStatus.text = "Disconnected"
+                connectionStatus.setTextColor(Color.parseColor("#985EFF"))
+            }
         })
     }
 

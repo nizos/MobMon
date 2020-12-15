@@ -220,20 +220,6 @@
         app:layout_constraintTop_toBottomOf="@+id/updateIntervalTextFieldLabel" />
 
     <TextView
-        android:id="@+id/dataTextView"
-        android:layout_width="260dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/press_connect_to_get_started"
-        android:textColor="#A0A0A0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connectButton"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
         android:id="@+id/connectionStatusText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

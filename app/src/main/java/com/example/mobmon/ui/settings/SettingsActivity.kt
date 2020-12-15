@@ -1,6 +1,7 @@
 package com.example.mobmon.ui.settings
 
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.text.InputFilter
 import android.util.Base64
@@ -61,8 +62,10 @@ class SettingsActivity : MainActivity() {
         MainController.status.observe(this, Observer {
             newStatus -> if (newStatus) {
                 statusText.text = "Connected"
+                statusText.setTextColor(Color.parseColor("#009688"))
             } else {
                 statusText.text = "Disconnected"
+                statusText.setTextColor(Color.parseColor("#985EFF"))
             }
         })
 
