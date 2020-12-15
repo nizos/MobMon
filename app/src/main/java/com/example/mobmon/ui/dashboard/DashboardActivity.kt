@@ -1,6 +1,5 @@
 package com.example.mobmon.ui.dashboard
 
-
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -61,6 +60,8 @@ class DashboardActivity : MainActivity(), SensorEventListener {
                 updateCardVisuals(WidgetController.widgetList[i].name, i)
             }
         })
+
+
     }
 
     fun updateCardVisuals(name: String, iteration: Int){
@@ -121,16 +122,20 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         for (i in 0 until WidgetController.cardList.count()) {
             val currentCard = WidgetController.cardList[i]
             val currentWidget = WidgetController.widgetList[i]
+
             val factor: Float = dashBoardLayout.context.resources.displayMetrics.density
             val size: Int = 150 * factor.toInt()
+
             val params = RelativeLayout.LayoutParams(size, size)
             params.leftMargin = currentWidget.posX.toInt()
             params.topMargin = currentWidget.posY.toInt()
-            dashBoardLayout.addView(currentCard, params)
-            parentCoordinatorLayout.addDraggableChild(currentCard)
 
+            dashBoardLayout.addView(currentCard, params)
+
+            parentCoordinatorLayout.addDraggableChild(currentCard)
             parentCoordinatorLayout.setViewDragListener(object :
                     DraggableCoordinatorLayout.ViewDragListener {
+
                 override fun onViewCaptured(view: View, i: Int) {
                     currentCard.isDragged = true
                 }
@@ -153,22 +158,11 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         card.addView(widget)
         widget.id = View.generateViewId()
         parentCoordinatorLayout.addDraggableChild(card)
+        val settingsIcon = ContextCompat.getDrawable(card.context, R.drawable.icon_settings)
+        card.checkedIcon = settingsIcon
         card.setOnLongClickListener {
-            //Creating the instance of PopupMenu
-            val popup = PopupMenu(this, card)
-            //Inflating the Popup using xml file
-            popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
-            //registering popup with OnMenuItemClickListener
-            popup.setOnMenuItemClickListener { item ->
-                handleWidgetMenuChoice(progBar, item, card)
-                true
-            }
-            //show popup menu
-            if(!card.isChecked)
-                popup.show()
             card.isChecked = !card.isChecked
             card.isSelected = !card.isSelected
-            //closing the setOnClickListener method
             true
         }
         card.setOnClickListener {
@@ -202,21 +196,8 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         val settingsIcon = ContextCompat.getDrawable(card.context, R.drawable.icon_settings)
         card.checkedIcon = settingsIcon
         card.setOnLongClickListener {
-            //Creating the instance of PopupMenu
-            val popup = PopupMenu(this, card)
-            //Inflating the Popup using xml file
-            popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
-            //registering popup with OnMenuItemClickListener
-            popup.setOnMenuItemClickListener { item ->
-                handleWidgetMenuChoice(progBar, item, card)
-                true
-            }
-            //show popup menu
-            if(!card.isChecked)
-                popup.show()
             card.isChecked = !card.isChecked
             card.isSelected = !card.isSelected
-            //closing the setOnClickListener method
             true
         }
         card.setOnClickListener {
@@ -244,11 +225,13 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         WidgetController.cardList.add(card)
     }
 
-    fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem, root: View) {
+    fun handleWidgetMenuChoice(bar: ProgressBar, item: MenuItem, rootView: View) {
         when(item.title){
             "Remove" -> {
                 (bar.parent as ViewGroup).removeAllViews()
-                WidgetController.removeCard(root)
+                rootView.visibility = View.GONE
+                WidgetController.removeCard(rootView)
+                dashBoardLayout.removeView(rootView)
             }
             "Cancel" -> Toast.makeText(this, "Cancel action", Toast.LENGTH_SHORT).show()
             else -> {
