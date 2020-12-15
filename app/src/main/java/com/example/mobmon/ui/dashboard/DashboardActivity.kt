@@ -171,6 +171,18 @@ class DashboardActivity : MainActivity(), SensorEventListener {
             //closing the setOnClickListener method
             true
         }
+        card.setOnClickListener {
+            if (card.isChecked) {
+                val popup = PopupMenu(this, card)
+                popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+                popup.setOnMenuItemClickListener { item ->
+                    handleWidgetMenuChoice(progBar, item, card)
+                    true
+                }
+                popup.show()
+            }
+            true
+        }
         WidgetController.cardList.add(card)
     }
 
@@ -189,7 +201,7 @@ class DashboardActivity : MainActivity(), SensorEventListener {
         parentCoordinatorLayout.addDraggableChild(card)
         val settingsIcon = ContextCompat.getDrawable(card.context, R.drawable.icon_settings)
         card.checkedIcon = settingsIcon
-        card.setOnClickListener {
+        card.setOnLongClickListener {
             //Creating the instance of PopupMenu
             val popup = PopupMenu(this, card)
             //Inflating the Popup using xml file
@@ -205,6 +217,18 @@ class DashboardActivity : MainActivity(), SensorEventListener {
             card.isChecked = !card.isChecked
             card.isSelected = !card.isSelected
             //closing the setOnClickListener method
+            true
+        }
+        card.setOnClickListener {
+            if (card.isChecked) {
+                val popup = PopupMenu(this, card)
+                popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+                popup.setOnMenuItemClickListener { item ->
+                    handleWidgetMenuChoice(progBar, item, card)
+                    true
+                }
+                popup.show()
+            }
             true
         }
         parentCoordinatorLayout.setViewDragListener(object :
