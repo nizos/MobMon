@@ -61,6 +61,11 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             hasStarted = true
         }
 
+
+        MainController.profileName.observe(this, Observer {
+            newProfileName -> activeProfile.text = newProfileName
+        })
+
         MainController.status.observe(this, Observer {
             newStatus -> if (newStatus) {
                 connectionStatus.text = "Connected"

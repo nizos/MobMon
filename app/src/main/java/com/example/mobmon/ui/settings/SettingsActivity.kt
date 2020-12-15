@@ -146,7 +146,7 @@ class SettingsActivity : MainActivity() {
                     .putInt("Update Interval", updateFreq)
                     .apply()
             var address: String = "http://%d.%d.%d.%d:%d/mahm".format(ipSegment1, ipSegment2, ipSegment3, ipSegment4, portNumber)
-           tryConnectOnce(address, usernameTextField.text.toString(), passwordTextField.text.toString(), updateFreq.toString())
+            tryConnectOnce(address, usernameTextField.text.toString(), passwordTextField.text.toString(), updateFreq.toString())
 
             // TODO SIGNAL CONNECTION HANDLER THAT THERE ARE NEW DETAILS
         }

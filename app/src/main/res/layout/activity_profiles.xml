@@ -20,4 +20,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/profileNameTextField"
+        android:layout_width="260dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="310dp"
+        android:layout_marginBottom="28dp"
+        android:inputType="text"
+        android:text="@string/default_profile"
+        android:textSize="19sp"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/updateProfileButton" />
+
+    <Button
+        android:id="@+id/updateProfileButton"
+        android:layout_width="260dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="315dp"
+        android:text="@string/update_profile_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileNameTextField" />
 </androidx.constraintlayout.widget.ConstraintLayout>

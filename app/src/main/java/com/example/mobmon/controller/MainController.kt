@@ -4,7 +4,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Base64
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
@@ -17,6 +16,11 @@ object MainController {
     var mainHandler: Handler = Handler(Looper.getMainLooper())
     var metricsData = MutableLiveData<MutableMap<String, MutableMap<String,String>>>()
 
+
+    val profileName = MutableLiveData<String>().apply {
+        value = "Default Profile"
+    }
+
     val status = MutableLiveData<Boolean>().apply {
         value = false
     }
@@ -27,7 +31,10 @@ object MainController {
                 update(address, username, password)
                 // Log.v("mobmon/connect", "Connecting to $address in $interval (ms) with the username [$username]")
                 // Log.v("mobmon/metricsData", "MetricsData is ${metricsData.value?.size} entries big.")
-                this@MainController.mainHandler.postDelayed(this, interval.toLong())
+
+                // Do not post delayed actions if we are disconnected.
+                if(status.value == true)
+                    this@MainController.mainHandler.postDelayed(this, interval.toLong())
             }
         })
     }
