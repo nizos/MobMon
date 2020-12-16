@@ -221,6 +221,7 @@ class SettingsActivity : MainActivity() {
                 {
                     Log.i("mobmon/connect", "Successfully connected!")
                     MainController.connect(ip, user, pass, interval)
+                    MainController.status.apply { value = true }
                 }, // TODO: Make encoding more dynamic.
                 { error -> notifyConnectionError(error.toString())})
         {
@@ -244,6 +245,8 @@ class SettingsActivity : MainActivity() {
                 .setContentTitle("Could not connect!")
                 .setContentText(error)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        MainController.status.apply { value = false }
 
         with(NotificationManagerCompat.from(this)) {
             notify(235235, builder.build())

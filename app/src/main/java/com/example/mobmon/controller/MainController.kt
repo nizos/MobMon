@@ -43,8 +43,8 @@ object MainController {
         val stringRequest = object: StringRequest(
                 Method.GET, ip,
                 // TODO: Make encoding more dynamic
-                { response -> metricsData.apply { value = MSIParser.parseMSIData(response, "UTF-8"); status.value = true } },
-                { error -> metricsData.apply { Log.e("mobmon/connect", error.toString()); ; status.value = false } })
+                { response -> metricsData.apply { value = MSIParser.parseMSIData(response, "UTF-8") }},
+                { error -> Log.e("mobmon/connect", error.toString()); status.apply { value = false }})
         {
             override fun getHeaders() : MutableMap<String,String> {
                 val headers = HashMap<String, String>()
